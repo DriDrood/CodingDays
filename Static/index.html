@@ -5,9 +5,39 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>CodingDays - Registrace</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
 </head>
 <body>
-    
+    <h1>Coding days</h1>
+    <form method="post" action="/api/register">
+        <label for="name">Jméno:</label>
+        <input type="text" name="name" id="name" />
+        <label for="surname">Příjmení:</label>
+        <input type="text" name="surname" id="surname" />
+        <label for="birth">Datum narození:</label>
+        <input type="date" name="birth" id="birth" />
+        <label for="phone">Telefon:</label>
+        <input type="tel" name="phone" id="phone" />
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" id="email" />
+        <label for="needNtb">Potřebuji půjčit notebook (nemám žádný použitelný):</label>
+        <input type="checkbox" name="needNtb" id="needNtb" />
+        <label for="level">Úroveň programování:</label>
+        <select name="level" id="level">
+            <option value="0">Nikdy jsem neprogramoval, ale zajímá mě to</option>
+            <option value="1">Už jsem si hrál ve scratchi / kreslil se želvou</option>
+            <option value="2">Zvládám základy ve skutečném programovacím jazyku (if, for, while, funkce, ...)</option>
+            <option value="3">Napsal jsem sám už několik složitějších programů (nad 500 řádků)</option>
+            <option value="4">Už jsem měl i nějaké reálné projekty pro jiné lidi</option>
+            <option value="5">Dělám to profesionálně, můžu to klidně učit</option>
+        </select>
+        <label for="languages">Programovací jazyky, ve kterých jsem napsal alespoň jeden program:</label>
+        <input type="text" name="languages" id="languages" />
+        <label for="note">Poznámka: (např. diety, alergie, panický strach z plyšových medvídků, poděkování organizátorům, atd.)</label>
+        <textarea name="note" id="note" cols="30" rows="3"></textarea>
+        <!-- <label for="bonus">Odhalil jsem tohle schované pole</label>
+        <input type="checkbox" id="bonus" /> -->
+        <button>Odeslat</button>
+    </form>
 </body>
 </html>
