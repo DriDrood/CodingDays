@@ -12,9 +12,7 @@ namespace CodingDays
     {
         public Startup(IConfiguration configuration)
         {
-            _configuration = new ConfigurationBuilder()
-                .AddJsonFile("appSettings.Development.json")
-                .Build();
+            _configuration = configuration;
         }
 
         private IConfiguration _configuration;
@@ -34,7 +32,7 @@ namespace CodingDays
 
         private string GetConnectionString()
         {
-            return "server=localhost;port=3306;database=CodingDays;user=root;password=test4";
+            return "server=db;port=3306;database=CodingDays;user=root;password=test4";
             
             var result = _configuration.GetConnectionString("DefaultConnection");
 
