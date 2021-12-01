@@ -1,0 +1,8 @@
+@host = http://localhost:5000
+
+###
+# @name Register
+POST {{host}}/api/register
+Content-Type: application/x-www-form-urlencoded
+
+name=Samuel&surname=Lachman&birth=1992-03-29&phone=%2B420+773+618+280&email=samlachman%40centrum.cz&level=0&languages=hodn%C4%9B&note=
