@@ -6,6 +6,6 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 app.UseRouting();
-app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/register", new { action = "Get", controller = "Register" }));
+app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/register", new { action = "Register", controller = "Register" }));
 
 app.Run();
