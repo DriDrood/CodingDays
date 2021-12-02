@@ -24,6 +24,9 @@ h2 {
     align-self: start;
     font-weight: normal;
 }
+p {
+    text-align: center;
+}
 
 a {
     color: hsl(0, 0%, 70%);
@@ -41,6 +44,11 @@ body {
 
     color: white;
     background-color: hsl(0, 0%, 20%);
+}
+
+span {
+    margin-bottom: 1rem;
+    max-width: 90%;
 }
 
 form {

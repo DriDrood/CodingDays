@@ -12,6 +12,7 @@
 
 <body>
     <h1>Coding days</h1>
+    <span>V případě jakýchkoli dotazů pište na <a href="mailto:samlachman@centrum.cz">samlachman@centrum.cz</a></span>
     <form method="post" action="/api/register">
         <label for="name">Jméno:*</label>
         <input type="text" name="name" id="name" required />
@@ -36,8 +37,7 @@
         </select>
         <label for="languages">Programovací jazyky, ve kterých jsem napsal alespoň jeden program:</label>
         <input type="text" name="languages" id="languages" />
-        <label for="note">Poznámka: (např. diety, alergie, panický strach z plyšových medvídků, poděkování
-            organizátorům, atd.)</label>
+        <label for="note">Poznámka: <br />(např. diety, panický strach z plyšových medvídků, našel jsi tady nebo v pozvánce chybu, atd.)</label>
         <textarea name="note" id="note" cols="30" rows="3"></textarea>
         <!-- <label for="bonus">Odhalil jsem tohle schované pole:*</label>
         <input type="checkbox" id="bonus" /> -->
