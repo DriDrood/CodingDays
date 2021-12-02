@@ -4,7 +4,7 @@ services:
     image: nginx
     restart: "no"
     ports:
-      - "80:80"
+      - "8050:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./Static:/var/www/static
