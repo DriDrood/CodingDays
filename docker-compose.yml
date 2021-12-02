@@ -12,16 +12,12 @@ services:
     build: Backend
     image: coding-days.backend
     restart: "no"
-    ports:
-      - "8080:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Production
     depends_on:
       - db
   db:
     image: "mariadb:10.3"
-    ports:
-      - "3306:3306"
     restart: "no"
     volumes:
       - ./Data/DB:/var/lib/mysql
