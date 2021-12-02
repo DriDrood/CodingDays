@@ -16,10 +16,12 @@ html, body {
 h1 {
     margin-bottom: 2rem;
     justify-self: center;
+    align-self: end;
     font-size: 4rem;
 }
 h2 {
     font-size: 1.5rem;
+    align-self: start;
     font-weight: normal;
 }
 
@@ -34,8 +36,8 @@ a:hover {
 /* main */
 body {
     display: grid;
-    justify-content: center;
-    align-content: center;
+    justify-items: center;
+    align-items: center;
 
     color: white;
     background-color: hsl(0, 0%, 20%);
@@ -43,6 +45,9 @@ body {
 
 form {
     display: grid;
+    align-self: start;
+
+    max-width: 90%;
 }
 
 /* inputs */
@@ -71,6 +76,12 @@ button {
 }
 button:hover {
     background-color: hsl(101, 43%, 70%);
+}
+
+select {
+    width: 100%;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
 }
 
 /* checkbox */
