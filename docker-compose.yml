@@ -13,6 +13,7 @@ services:
     image: coding-days.backend
     restart: "no"
     environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       ASPNETCORE_ENVIRONMENT: Production
     depends_on:
       - db

@@ -32,9 +32,9 @@ namespace CodingDays
 
         private string GetConnectionString()
         {
-            return "server=db;port=3306;database=CodingDays;user=root;password=test4";
+            var result = "server=db;port=3306;database=CodingDays";
             
-            var result = _configuration.GetConnectionString("DefaultConnection");
+            // var result = _configuration.GetConnectionString("DefaultConnection");
 
             // get password from env
             var password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD");
