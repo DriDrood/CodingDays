@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta charset='utf-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <title>CodingDays - Registrace</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css' />
 </head>
+
 <body>
     <h1>Coding days</h1>
     <form method="post" action="/api/register">
         <label for="name">Jméno:</label>
-        <input type="text" name="name" id="name" />
+        <input type="text" name="name" id="name" required />
         <label for="surname">Příjmení:</label>
-        <input type="text" name="surname" id="surname" />
+        <input type="text" name="surname" id="surname" required />
         <label for="birth">Datum narození:</label>
-        <input type="date" name="birth" id="birth" />
+        <input type="date" name="birth" id="birth" required />
         <label for="phone">Telefon:</label>
-        <input type="tel" name="phone" id="phone" />
+        <input type="tel" name="phone" id="phone" required />
         <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" />
+        <input type="email" name="email" id="email" required />
         <label for="needNtb">Potřebuji půjčit notebook (nemám žádný použitelný):</label>
         <input type="checkbox" name="needNtb" id="needNtb" />
         <label for="level">Úroveň programování:</label>
@@ -33,11 +36,13 @@
         </select>
         <label for="languages">Programovací jazyky, ve kterých jsem napsal alespoň jeden program:</label>
         <input type="text" name="languages" id="languages" />
-        <label for="note">Poznámka: (např. diety, alergie, panický strach z plyšových medvídků, poděkování organizátorům, atd.)</label>
+        <label for="note">Poznámka: (např. diety, alergie, panický strach z plyšových medvídků, poděkování
+            organizátorům, atd.)</label>
         <textarea name="note" id="note" cols="30" rows="3"></textarea>
         <!-- <label for="bonus">Odhalil jsem tohle schované pole</label>
         <input type="checkbox" id="bonus" /> -->
         <button>Odeslat</button>
     </form>
 </body>
+
 </html>

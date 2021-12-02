@@ -39,7 +39,6 @@ namespace CodingDays.Database.Entities
         public string? Email { get; set; }
         public bool NeedNtb { get; set; }
         public int Level { get; set; }
-        [Required]
         [StringLength(200)]
         public string? Languages { get; set; }
         [StringLength(1000)]

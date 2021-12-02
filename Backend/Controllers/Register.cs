@@ -1,3 +1,4 @@
+using System;
 using CodingDays.Database;
 using CodingDays.Database.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,19 @@ namespace CodingDays.Controllers
         [HttpPost]
         public ActionResult Register(Models.Registration registration)
         {
-            var reg = new Registration(registration);
-            
-            _db.Add(reg);
-            _db.SaveChanges();
+            try
+            {
+                var reg = new Registration(registration);
 
-            return Redirect("/done.html");
+                _db.Add(reg);
+                _db.SaveChanges();
+
+                return Redirect("/done.html");
+            }
+            catch (Exception)
+            {
+                return Redirect("/error.html");
+            }
         }
     }
 }

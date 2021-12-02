@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <title>CodingDays - Chyba</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css' />
+</head>
+
+<body>
+
+    <h1>Ajaj, chybka</h1>
+    <h2>Můžeš to zkusit <a id="back" href="/index.html">znovu</a>, třeba to i pomůže</h2>
+
+    <script>
+        var back = document.getElementById("back");
+        back.onclick = ev => {
+            ev.preventDefault();
+            window.history.back();
+        };
+    </script>
+</body>
+
+</html>
