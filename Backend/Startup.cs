@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.Extensions.Hosting;
 
 namespace CodingDays
 {
@@ -28,12 +28,13 @@ namespace CodingDays
         {
             app.UseRouting();
             app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/register", new { action = "Register", controller = "Register" }));
+
+            Setup(app, env);
         }
 
         private string GetConnectionString()
         {
             var result = "server=db;port=3306;database=CodingDays";
-            
             // var result = _configuration.GetConnectionString("DefaultConnection");
 
             // get password from env
@@ -42,6 +43,20 @@ namespace CodingDays
                 result = $"{result};user=root;password={password}";
 
             return result;
+        }
+
+        private void Setup(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            // scoped
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                if (!env.IsDevelopment())
+                {
+                    serviceScope.ServiceProvider.GetService<Database.DB>()!.Database.Migrate();
+                }
+            }
         }
     }
 }
