@@ -10,6 +10,6 @@ namespace CodingDays.Database
         public DB() : this(new DbContextOptions<DB>())
         { }
 
-        public DbSet<Registration> Registrations { get; set; }
+        public DbSet<Registration> Registrations => Set<Registration>();
     }
 }
