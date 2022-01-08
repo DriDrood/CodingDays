@@ -27,7 +27,7 @@ namespace CodingDays
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
-            app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/register", new { action = "Register", controller = "Register" }));
+            app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/{action}", new { controller = "Register" }));
 
             Setup(app, env);
         }

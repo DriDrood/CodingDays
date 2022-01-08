@@ -134,3 +134,8 @@ input[type=checkbox]:checked::before {
     border-bottom-style: solid;
     border-left-style: solid;
 }
+
+#count {
+    display: block;
+    height: 1rem;
+}
