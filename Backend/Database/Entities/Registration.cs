@@ -20,6 +20,8 @@ namespace CodingDays.Database.Entities
             Level = reg.Level;
             Languages = reg.Languages;
             Note = reg.Note;
+            Bonus = reg.Bonus;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public Guid Id { get; set; } = Guid.NewGuid();
@@ -44,5 +46,6 @@ namespace CodingDays.Database.Entities
         [StringLength(1000)]
         public string? Note { get; set; }
         public bool? Bonus { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

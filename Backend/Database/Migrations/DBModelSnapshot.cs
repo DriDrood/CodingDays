@@ -31,6 +31,9 @@ namespace CodingDays.Database.Migrations
                     b.Property<bool?>("Bonus")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
