@@ -1,28 +1,10 @@
 <template>
-  <Register v-if="page == 'register'" />
-  <RegisterDone v-else-if="page == 'register-done'" />
-  <Help v-else-if="page == 'help'" />
-  <Error v-else />
+  <router-view/>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Register from './pages/register.vue'
-import RegisterDone from './pages/register-done.vue'
-import Help from './pages/help.vue'
-import Error from './pages/error.vue'
-
 export default {
   name: 'App',
-  components: {
-    Register,
-    RegisterDone,
-    Help,
-    Error,
-  },
-  computed: {
-    ...mapState(['page']),
-  },
 }
 </script>
 

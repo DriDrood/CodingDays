@@ -16,7 +16,7 @@ export default {
   props: {
     count: {
       type: Number,
-      default: 3,
+      default: 8,
     },
   },
   data: () => ({
