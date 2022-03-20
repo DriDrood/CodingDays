@@ -48,10 +48,7 @@ namespace CodingDays
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                if (!env.IsDevelopment())
-                {
-                    serviceScope.ServiceProvider.GetService<Database.DB>()!.Database.Migrate();
-                }
+                serviceScope.ServiceProvider.GetService<Database.DB>()!.Database.Migrate();
             }
         }
     }

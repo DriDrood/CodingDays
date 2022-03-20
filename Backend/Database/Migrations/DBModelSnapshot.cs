@@ -19,6 +19,76 @@ namespace CodingDays.Database.Migrations
                 .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("CodingDays.Database.Entities.Cypher", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cyphers");
+                });
+
+            modelBuilder.Entity("CodingDays.Database.Entities.CypherUsage", b =>
+                {
+                    b.Property<Guid>("TeamId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CypherId")
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<Guid>("HintId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("TeamId", "CypherId");
+
+                    b.HasIndex("CypherId");
+
+                    b.HasIndex("HintId");
+
+                    b.ToTable("CypherUsages");
+                });
+
+            modelBuilder.Entity("CodingDays.Database.Entities.Hint", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<byte>("Order")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<int>("Step")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hints");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                            Order = (byte)0,
+                            Step = 0,
+                            Text = "Další nápovědu dostanete osobně. Tento kód můžete zadat v dalším kroku znovu"
+                        });
+                });
+
             modelBuilder.Entity("CodingDays.Database.Entities.Registration", b =>
                 {
                     b.Property<Guid>("Id")
@@ -71,6 +141,67 @@ namespace CodingDays.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Registrations");
+                });
+
+            modelBuilder.Entity("CodingDays.Database.Entities.Team", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("CurrentStep")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("CodingDays.Database.Entities.CypherUsage", b =>
+                {
+                    b.HasOne("CodingDays.Database.Entities.Cypher", "Cypher")
+                        .WithMany("CypherUsages")
+                        .HasForeignKey("CypherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CodingDays.Database.Entities.Hint", "Hint")
+                        .WithMany("CypherUsages")
+                        .HasForeignKey("HintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CodingDays.Database.Entities.Team", "Team")
+                        .WithMany("CypherUsages")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cypher");
+
+                    b.Navigation("Hint");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("CodingDays.Database.Entities.Cypher", b =>
+                {
+                    b.Navigation("CypherUsages");
+                });
+
+            modelBuilder.Entity("CodingDays.Database.Entities.Hint", b =>
+                {
+                    b.Navigation("CypherUsages");
+                });
+
+            modelBuilder.Entity("CodingDays.Database.Entities.Team", b =>
+                {
+                    b.Navigation("CypherUsages");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,5 @@
 <template>
-  <div class="help">
+  <div class="hint">
     <router-link :to="{ name: 'home' }">Zpět</router-link>
     <div class="picker">
       <span v-for="index in count" :key="`i-${index}`">{{ result[index - 1] ?? "_" }}</span>
@@ -7,7 +7,7 @@
       <button @click="reset">Reset</button>
       <button @click="send">Send</button>
     </div>
-    <div class="response">{{ help.response.text }}</div>
+    <div class="response">{{ hint.response.text }}</div>
   </div>
 </template>
 
@@ -15,7 +15,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: "help",
+  name: "hint",
   props: {
     count: {
       type: Number,
@@ -29,7 +29,7 @@ export default {
     response: null,
   }),
   computed: {
-    ...mapState(['help'])
+    ...mapState(['hint'])
   },
   methods: {
     select() {
@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss">
-.help {
+.hint {
   .picker {
     display: grid;
     padding: 3rem;

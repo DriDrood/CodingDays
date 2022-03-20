@@ -39,10 +39,7 @@ namespace CodingDays.Controllers
         {
             var registrationCount = _db.Registrations.Count();
             
-            return new CountResp
-            {
-                Count = registrationCount,
-            };
+            return new CountResp(registrationCount);
         }
 
         [HttpGet]

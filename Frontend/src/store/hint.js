@@ -5,23 +5,23 @@ export default {
     state: {
         response: {
             text: null,
-            image: null,
+            imageUrl: null,
         }
     },
     mutations: {
         // type, message
-        sentHelpCode: (state, payload) => {
+        hintSendCode: (state, payload) => {
             state.help = payload;
         },
     },
     actions: {
         // code
-        helpSendCode: async (context, payload) => {
+        hintSendCode: async (context, payload) => {
             const encodedCode = encode.encode(payload.code)
     
-            const data = await post(context, '/api/help/try', { code: encodedCode })
+            const data = await post(context, '/api/hint/try', { code: encodedCode })
     
-            context.commit('sentHelpCode', data)
+            context.commit('hintSendCode', data)
         },
     }
 }

@@ -1,15 +1,11 @@
 import { createStore } from 'vuex'
-import help from './help'
+import hint from './hint'
 
 export default createStore({
   state: {
     page: 'register',
     loading: false,
     registerCount: null,
-    help: {
-      type: null,
-      message: null,
-    },
   },
   mutations: {
     // page
@@ -46,6 +42,6 @@ export default createStore({
     },
   },
   modules: {
-    help
+    hint
   }
 })

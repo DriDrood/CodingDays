@@ -10,3 +10,22 @@ name=Samuel&surname=Lachman&birth=1992-03-29&phone=%2B420+773+618+280&email=saml
 ###
 # @name Count
 GET {{host}}/api/register/count
+
+###
+# @name InsertCypher
+POST {{host}}/api/hint/insertCypher
+Content-Type: application/json
+
+{
+    "cypherResult": "09645114"
+}
+
+### ea92b2d977dff2acbf26fe7c31e844a0f0f25fe1, 7aff4a9b9390cf902c6d38e1964193441c9ba14
+# @name TryHint
+POST {{host}}/api/hint/try
+Content-Type: application/json
+
+{
+    "teamId": "15c1b27b-db31-42ac-b935-5d8b1e040e1a",
+    "cypherResult": "ea92b2d977dff2acbf26fe7c31e844a0f0f25fe1"
+}
