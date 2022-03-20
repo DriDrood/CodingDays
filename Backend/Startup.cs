@@ -26,6 +26,7 @@ namespace CodingDays
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<Exceptions.ExceptionMiddleware>();
             app.UseRouting();
             app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/{controller}/{action}"));
 

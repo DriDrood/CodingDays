@@ -22,9 +22,9 @@ public class HintController : ControllerBase
 
     public async Task<ActionResult<TryResp>> Try([FromBody]TryReq param)
     {
-        Cypher cypher = _db.Cyphers.Find(param.CypherResult)
+        Cypher cypher = _db.Cyphers.Find(param?.CypherResult)
             ?? throw new UsageException("CypherResult is invalid");
-        Team team = _db.Teams.Find(param.TeamId)
+        Team team = _db.Teams.Find(param?.TeamId)
             ?? throw new UsageException("Team is invalid");
 
         Hint? hint = _db.CypherUsages
@@ -64,8 +64,14 @@ public class HintController : ControllerBase
     {
         string hash = CypherHasher.HashCypherResult(param.CypherResult);
 
+        // already exists
+        bool alreadyExists = _db.Cyphers.Any(c => c.Id == hash);
+        if (alreadyExists)
+            throw new UsageException("Cypher already exists");
+
+        // create
         Cypher cypher = new Cypher(hash, param.CypherResult);
-        _db.Cyphers.Add(cypher);
+        _db.Add(cypher);
         
         await _db.SaveChangesAsync();
 

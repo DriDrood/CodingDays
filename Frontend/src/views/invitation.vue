@@ -14,8 +14,6 @@ export default {
 <style lang="scss">
 .invitation {
     display: grid;
-    box-sizing: border-box;
-    padding: 1rem 0;
     grid-gap: 1rem;
     justify-content: center;
 }

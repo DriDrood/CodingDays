@@ -1,150 +1,174 @@
 <template>
-  <router-view/>
+    <notifications />
+    <router-view />
 </template>
 
 <script>
+import Notifications from './components/notifications.vue'
+
 export default {
-    name: 'App',
-}
+    name: "App",
+    components: {
+        Notifications
+    },
+};
 </script>
 
 <style>
 /* reset */
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
-    font-family: 'VT323', monospace;
-    font-size: 1.2rem;
+  font-family: "VT323", monospace;
+  font-size: 1.2rem;
 }
 
-html, body, #app, #app > div {
-    width: 100%;
-    height: 100%;
+html,
+body,
+#app,
+#app > div {
+  width: 100%;
+  height: 100%;
+}
+
+#app > div {
+  padding: 1rem 0;
 }
 
 /* custom elements */
 h1 {
-    margin-bottom: 2rem;
-    justify-self: center;
-    align-self: end;
-    font-size: 4rem;
+  margin-bottom: 2rem;
+  justify-self: center;
+  align-self: end;
+  font-size: 4rem;
 }
 h2 {
-    font-size: 1.5rem;
-    align-self: start;
-    font-weight: normal;
+  font-size: 1.5rem;
+  align-self: start;
+  font-weight: normal;
 }
 p {
-    text-align: center;
+  text-align: center;
 }
 
 a {
-    color: hsl(0, 0%, 70%);
-    transition: color .5s;
+  color: hsl(0, 0%, 70%);
+  transition: color 0.5s;
 }
 a:hover {
-    color: hsl(0, 0%, 90%);
+  color: hsl(0, 0%, 90%);
 }
 
 /* main */
 #app > div {
-    display: grid;
-    justify-items: center;
-    align-items: center;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 
-    overflow: auto;
+  overflow: auto;
 
-    color: white;
-    background-color: hsl(0, 0%, 20%);
+  color: white;
+  background-color: hsl(0, 0%, 20%);
 }
 
 form {
-    display: grid;
-    align-self: start;
+  display: grid;
+  align-self: start;
 
-    max-width: 90%;
+  max-width: 90%;
 }
 
 /* inputs */
-input, textarea, select, button {
-    margin-top: .2rem;
-    margin-bottom: .7rem;
-    padding: .5rem 1rem;
+input,
+textarea,
+select,
+button {
+  margin-top: 0.2rem;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem 1rem;
 
-    border: none;
-    border-radius: .3rem;
-    background-color: hsl(0, 0%, 80%);
-    outline: none;
+  border: none;
+  border-radius: 0.3rem;
+  background-color: hsl(0, 0%, 80%);
+  outline: none;
 
-    transition: background-color .5s;
+  transition: background-color 0.5s;
 }
-input:focus, input:focus:hover, textarea:focus, textarea:focus:hover, select:focus, select:focus:hover {
-    background-color: hsl(0, 0%, 60%);
+input:focus,
+input:focus:hover,
+textarea:focus,
+textarea:focus:hover,
+select:focus,
+select:focus:hover {
+  background-color: hsl(0, 0%, 60%);
 }
-input:hover, textarea:hover, select:hover {
-    background-color: hsl(0, 0%, 90%);
+input:hover,
+textarea:hover,
+select:hover {
+  background-color: hsl(0, 0%, 90%);
 }
 
 button {
-    cursor: pointer;
-    background-color: hsl(101, 43%, 57%);
+  cursor: pointer;
+  background-color: hsl(101, 43%, 57%);
 }
 button:hover {
-    background-color: hsl(101, 43%, 70%);
+  background-color: hsl(101, 43%, 70%);
 }
 
 select {
-    width: 100%;
-    white-space: pre-wrap;
-    text-overflow: ellipsis;
+  width: 100%;
+  white-space: pre-wrap;
+  text-overflow: ellipsis;
 }
 
 /* checkbox */
-input[type=checkbox] {
+input[type="checkbox"] {
   position: relative;
-  
+
   width: 1rem;
   height: 1rem;
-  margin-right: .75rem;
+  margin-right: 0.75rem;
   padding: 0;
   border-radius: 0;
-  
+
   cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   outline: 0;
 }
-input[type=checkbox]:checked {
-    background-color: hsla(0, 0%, 20%, 0);
+input[type="checkbox"]:checked {
+  background-color: hsla(0, 0%, 20%, 0);
 }
-input[type=checkbox]::before {
-    content: '';
-    
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    
-    width: 100%;
-    height: 100%;
-    
-    transition: all 0.3s ease-in-out;
+input[type="checkbox"]::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  transition: all 0.3s ease-in-out;
 }
-input[type=checkbox]:checked::before {
-    height: 50%;
-    
-    transform: rotate(-45deg);
-    
-    border-width: 4px;
-    border-color: hsl(101, 43%, 57%);
-    border-bottom-style: solid;
-    border-left-style: solid;
+input[type="checkbox"]:checked::before {
+  height: 50%;
+
+  transform: rotate(-45deg);
+
+  border-width: 4px;
+  border-color: hsl(101, 43%, 57%);
+  border-bottom-style: solid;
+  border-left-style: solid;
 }
 
 #count {
-    display: block;
-    height: 1rem;
+  display: block;
+  height: 1rem;
 }
 </style>

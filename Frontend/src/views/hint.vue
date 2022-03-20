@@ -3,11 +3,14 @@
     <router-link :to="{ name: 'home' }">Zpět</router-link>
     <div class="picker">
       <span v-for="index in count" :key="`i-${index}`">{{ result[index - 1] ?? "_" }}</span>
-      <button @click="select">Vlož {{ current }}</button>
+      <button v-if="result.length < count" @click="select">Vlož {{ current }}</button>
+      <button v-else @click="send">Odeslat</button>
       <button @click="reset">Reset</button>
-      <button @click="send">Send</button>
     </div>
-    <div class="response">{{ hint.response.text }}</div>
+    <div class="response">
+      <span v-if="hint.response.text">{{ hint.response.text }}</span>
+      <img v-if="hint.response.imageUrl" :src="hint.response.imageUrl" alt="response" />
+    </div>
   </div>
 </template>
 
@@ -25,8 +28,6 @@ export default {
   data: () => ({
     result: [],
     current: 0,
-    sent: null,
-    response: null,
   }),
   computed: {
     ...mapState(['hint'])
@@ -42,7 +43,7 @@ export default {
       this.result = [];
     },
     send() {
-      this.$store.dispatch('sentHelpCode', { code: this.result.join(".") })
+      this.$store.dispatch('hintSendCode', { code: this.result.join(".") })
     },
   },
   mounted() {
@@ -63,6 +64,13 @@ export default {
     align-items: center;
     justify-content: center;
     grid-gap: 1rem;
+  }
+
+  .response {
+    display: grid;
+    grid-gap: 1rem;
+    grid-auto-flow: row;
+    justify-items: center;
   }
 }
 </style>

@@ -10,7 +10,7 @@ public static class CypherHasher
         string changedString = string.Join(".", cypherResult.ToArray());
         byte[] resultBytes = Encoding.UTF8.GetBytes(changedString);
         byte[] hashedCypherResult = SHA1.HashData(resultBytes);
-        string hash = string.Join("", hashedCypherResult.Select(b => b.ToString("x")));
+        string hash = string.Join("", hashedCypherResult.Select(b => b.ToString("x").PadLeft(2, '0')));
 
         return hash;
     }

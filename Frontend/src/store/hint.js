@@ -1,5 +1,5 @@
 import encode from "../helpers/encode"
-import { get, post } from '../helpers/send'
+import send from '../helpers/send'
 
 export default {
     state: {
@@ -11,7 +11,7 @@ export default {
     mutations: {
         // type, message
         hintSendCode: (state, payload) => {
-            state.help = payload;
+            state.response = payload;
         },
     },
     actions: {
@@ -19,7 +19,7 @@ export default {
         hintSendCode: async (context, payload) => {
             const encodedCode = encode.encode(payload.code)
     
-            const data = await post(context, '/api/hint/try', { code: encodedCode })
+            const data = await send.post(context, '/api/hint/try', { cypherResult: encodedCode, teamId: '15c1b27b-db31-42ac-b935-5d8b1e040e1a' })
     
             context.commit('hintSendCode', data)
         },

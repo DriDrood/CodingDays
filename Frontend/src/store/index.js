@@ -1,20 +1,12 @@
 import { createStore } from 'vuex'
 import hint from './hint'
+import notifications from './notifications'
 
 export default createStore({
   state: {
-    page: 'register',
-    loading: false,
     registerCount: null,
   },
   mutations: {
-    // page
-    pageChange: (state, payload) => {
-      state.page = payload.page
-    },
-    setLoading: (state, payload) => {
-      state.loading = payload
-    },
     // count
     getRegisterCount: (state, payload) => {
       state.registerCount = payload.count
@@ -42,6 +34,7 @@ export default createStore({
     },
   },
   modules: {
-    hint
+    hint,
+    notifications
   }
 })
