@@ -34,15 +34,11 @@ namespace CodingDays
 
         private string GetConnectionString()
         {
-            var result = "server=db;port=3306;database=CodingDays";
-            // var result = _configuration.GetConnectionString("DefaultConnection");
-
-            // get password from env
+            // get config from env
+            var host = Environment.GetEnvironmentVariable("MYSQL_HOST");
             var password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD");
-            if (password is not null)
-                result = $"{result};user=root;password={password}";
 
-            return result;
+            return $"server={host};port=3306;database=CodingDays;user=root;password={password}";
         }
 
         private void Setup(IApplicationBuilder app, IWebHostEnvironment env)

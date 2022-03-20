@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using CodingDays.Models.Dto.Registration;
 
 namespace CodingDays.Database.Entities
 {
@@ -8,7 +9,7 @@ namespace CodingDays.Database.Entities
         public Registration()
         {
         }
-        public Registration(Models.Registration reg)
+        public Registration(RegistrationReq reg)
         {
             Id = Guid.NewGuid();
             Name = reg.Name;

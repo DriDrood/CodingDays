@@ -20,6 +20,7 @@
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
+            "envFile": "${workspaceFolder}/.env"
         },
         {
             "name": ".NET Core Attach",

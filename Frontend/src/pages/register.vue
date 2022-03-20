@@ -6,7 +6,7 @@
       V případě jakýchkoli dotazů pište na
       <a href="mailto:samlachman@centrum.cz">samlachman@centrum.cz</a>
     </div>
-    <div v-if="registerCount != null" id="count">
+    <div>
       Zbývá {{ remains }} míst. Ve frontě je {{ queue }} lidí.
     </div>
     <form @submit="send" method="post" action="/api/register">
@@ -50,9 +50,15 @@ export default {
   computed: {
     ...mapState([ "registerCount" ]),
     remains() {
+      if (this.registerCount == null)
+        return "??";
+
       return Math.max(20 - this.registerCount, 0)
     },
     queue() {
+      if (this.registerCount == null)
+        return "??";
+
       return Math.max(this.registerCount - 20, 0)
     },
   },

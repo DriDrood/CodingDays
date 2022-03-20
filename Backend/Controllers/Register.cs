@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using CodingDays.Database;
 using CodingDays.Database.Entities;
+using CodingDays.Models.Dto.Registration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodingDays.Controllers
@@ -16,7 +17,7 @@ namespace CodingDays.Controllers
         private readonly DB _db;
 
         [HttpPost]
-        public ActionResult Register(Models.Registration registration)
+        public ActionResult Register(RegistrationReq registration)
         {
             try
             {
@@ -34,10 +35,14 @@ namespace CodingDays.Controllers
         }
 
         [HttpGet]
-        public ActionResult Count()
+        public CountResp Count()
         {
             var registrationCount = _db.Registrations.Count();
-            return Ok(registrationCount);
+            
+            return new CountResp
+            {
+                Count = registrationCount,
+            };
         }
 
         [HttpGet]

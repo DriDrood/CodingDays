@@ -48,7 +48,7 @@ export default createStore({
     },
     // count
     getRegisterCount: (state, payload) => {
-      state.register.count = payload.count
+      state.registerCount = payload.count
     },
     sendRegister: (state, ) => {
 
@@ -60,17 +60,9 @@ export default createStore({
   },
   actions: {
     getRegisterCount: async (context) => {
-      try
-      {
-        const data = await get(context, '/api/register/count')
-  
-        context.commit('getRegisterCount', { count: data })
-      }
-      catch (err)
-      {
-        console.warn(err);
-        debugger;
-      }
+      const data = await get(context, '/api/register/count')
+
+      context.commit('getRegisterCount', data)
     },
     // 
     sendRegister: async (context, payload) => {
