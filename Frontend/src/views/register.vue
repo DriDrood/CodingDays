@@ -43,23 +43,20 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "register",
   computed: {
-    ...mapState([ "registerCount" ]),
     remains() {
-      if (this.registerCount == null)
+      if (this.$store.state.register.count == null)
         return "??";
 
-      return Math.max(20 - this.registerCount, 0)
+      return Math.max(20 - this.$store.state.register.count, 0)
     },
     queue() {
-      if (this.registerCount == null)
+      if (this.$store.state.register.count == null)
         return "??";
 
-      return Math.max(this.registerCount - 20, 0)
+      return Math.max(this.$store.state.register.count - 20, 0)
     },
   },
   methods: {
@@ -70,7 +67,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getRegisterCount")
+    this.$store.dispatch("registerCount")
   },
 };
 </script>
