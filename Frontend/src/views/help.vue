@@ -1,16 +1,19 @@
 <template>
   <div class="help">
+    <router-link :to="{ name: 'home' }">Zpět</router-link>
     <div class="picker">
       <span v-for="index in count" :key="`i-${index}`">{{ result[index - 1] ?? "_" }}</span>
       <button @click="select">Vlož {{ current }}</button>
       <button @click="reset">Reset</button>
       <button @click="send">Send</button>
     </div>
-    <div class="response"></div>
+    <div class="response">{{ help.response.text }}</div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: "help",
   props: {
@@ -23,7 +26,11 @@ export default {
     result: [],
     current: 0,
     sent: null,
+    response: null,
   }),
+  computed: {
+    ...mapState(['help'])
+  },
   methods: {
     select() {
       if (this.result.length >= this.count)

@@ -1,32 +1,5 @@
 import { createStore } from 'vuex'
-import encode from "./encode";
-
-const get = async (context, url) => {
-  try
-  {
-    context.commit('setLoading', true)
-
-    const result = await fetch(url)
-    return await result.json()
-  }
-  finally
-  {
-    context.commit('setLoading', false)
-  }
-}
-const post = async (context, url, data) => {
-  try
-  {
-    context.commit('setLoading', true)
-
-    const result = await fetch(url, { method: 'POST', headers: { 'Content-type': 'application/json'}, body: JSON.stringify(data) })
-    return await result.json()
-  }
-  finally
-  {
-    context.commit('setLoading', false)
-  }
-}
+import help from './help'
 
 export default createStore({
   state: {
@@ -50,13 +23,6 @@ export default createStore({
     getRegisterCount: (state, payload) => {
       state.registerCount = payload.count
     },
-    sendRegister: (state, ) => {
-
-    },
-    // type, message
-    sentHelpCode: (state, payload) => {
-      state.help = payload;
-    },
   },
   actions: {
     getRegisterCount: async (context) => {
@@ -78,15 +44,8 @@ export default createStore({
         context.commit('pageChange', 'error')
       }
     },
-    // code
-    sentHelpCode: async (context, payload) => {
-      const encodedCode = encode.encode(payload.code)
-
-      const data = await post(context, '/api/help/try', { code: encodedCode })
-
-      context.commit('sentHelpCode', data)
-    },
   },
   modules: {
+    help
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <h1>Coding days</h1>
-    <div>Pozvánka / informace <a href="invitation.png">zde</a></div>
+    <router-link :to="{ name: 'home' }">Zpět</router-link>
     <div>
       V případě jakýchkoli dotazů pište na
       <a href="mailto:samlachman@centrum.cz">samlachman@centrum.cz</a>
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style>
-.register div {
+.register div, .register a {
     margin-bottom: 1rem;
     max-width: 90%;
 }
