@@ -14,4 +14,5 @@ public enum ESteps
     ResetPassword,
     GitAccount,
     GitPush,
+    Done,
 }

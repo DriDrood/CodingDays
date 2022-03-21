@@ -138,7 +138,12 @@ namespace CodingDays.Database.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<Guid?>("TeamId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Registrations");
                 });
@@ -189,6 +194,15 @@ namespace CodingDays.Database.Migrations
                     b.Navigation("Team");
                 });
 
+            modelBuilder.Entity("CodingDays.Database.Entities.Registration", b =>
+                {
+                    b.HasOne("CodingDays.Database.Entities.Team", "Team")
+                        .WithMany("Registrations")
+                        .HasForeignKey("TeamId");
+
+                    b.Navigation("Team");
+                });
+
             modelBuilder.Entity("CodingDays.Database.Entities.Cypher", b =>
                 {
                     b.Navigation("CypherUsages");
@@ -202,6 +216,8 @@ namespace CodingDays.Database.Migrations
             modelBuilder.Entity("CodingDays.Database.Entities.Team", b =>
                 {
                     b.Navigation("CypherUsages");
+
+                    b.Navigation("Registrations");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,7 +1,5 @@
 <template>
-  <div class="register">
-    <h1>Coding days</h1>
-    <router-link :to="{ name: 'home' }">Zpět</router-link>
+  <main class="register">
     <div>
       V případě jakýchkoli dotazů pište na
       <a href="mailto:samlachman@centrum.cz">samlachman@centrum.cz</a>
@@ -39,7 +37,7 @@
         <input type="checkbox" id="bonus" name="bonus" value="true" /> -->
       <button>Odeslat</button>
     </form>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -72,9 +70,21 @@ export default {
 };
 </script>
 
-<style>
-.register div, .register a {
-    margin-bottom: 1rem;
-    max-width: 90%;
-}
+<style lang="scss">
+.register {
+  display: grid;
+  justify-items: center;
+
+  div {
+      margin-bottom: 1rem;
+      max-width: 90%;
+  }
+  
+  form {
+      display: grid;
+      align-self: start;
+
+      max-width: 90%;
+  }
+} 
 </style>

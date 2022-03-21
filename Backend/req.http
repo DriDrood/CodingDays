@@ -17,10 +17,10 @@ POST {{host}}/api/hint/insertCypher
 Content-Type: application/json
 
 {
-    "cypherResult": "82287755"
+    "cypherResult": "44222116"
 }
 
-### ea92b2d977dff2acbf26fe7c31e844a0f0f25fe1, 7aff4a9b9390cf902c6d38e1964193441c9ba14
+###
 # @name TryHint
 POST {{host}}/api/hint/try
 Content-Type: application/json
@@ -29,3 +29,7 @@ Content-Type: application/json
     "teamId": "15c1b27b-db31-42ac-b935-5d8b1e040e1a",
     "cypherResult": "9df7c79a3039892080e0738d3b38be8fdc4f8c7"
 }
+
+###
+# @name ListTeams
+GET {{host}}/api/team/get

@@ -47,6 +47,8 @@ namespace CodingDays.Database.Entities
         [StringLength(1000)]
         public string? Note { get; set; }
         public bool? Bonus { get; set; }
+        public Guid? TeamId { get; set; }
+        public Team? Team { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

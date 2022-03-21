@@ -19,6 +19,7 @@ public class Team
     [StringLength(50)]
     public string Name { get; set; }
     public ESteps CurrentStep { get; set; }
-    
+
     public ICollection<CypherUsage> CypherUsages { get; set; } = new HashSet<CypherUsage>();
+    public ICollection<Registration> Registrations { get; set; } = new HashSet<Registration>();
 }

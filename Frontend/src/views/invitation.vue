@@ -1,8 +1,7 @@
 <template>
-    <div class="invitation">
-        <router-link :to="{ name: 'home' }">Zpět</router-link>
+    <main class="invitation">
         <img src="/invitation.png" alt="invitation" />
-    </div>
+    </main>
 </template>
 
 <script>

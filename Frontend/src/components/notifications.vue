@@ -26,27 +26,35 @@ export default {
 
 <style lang="scss">
 #app .loading {
-    width: 10rem;
-    height: 5rem;
+    display: grid;
     position: absolute;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
     
+    width: 10rem;
+    height: 5rem;
+    justify-content: center;
+    align-content: center;
+    
     padding: 0;
     border-radius: 0 0 1rem 1rem;
-    background-color: hsl(0, 0%, 35%);
+    background-color: hsla(0, 0%, 35%, .8);
 }
 #app .notifications {
-    width: 60%;
-    height: auto;
     position: absolute;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 50;
 
+    width: 60%;
+    height: auto;
+
     padding: 0;
     border-radius: 0 0 1rem 1rem;
+    overflow: hidden;
 
     div {
         width: 100%;
@@ -54,13 +62,13 @@ export default {
         text-align: center;
         
         &.success {
-            background-color: hsl(118, 44%, 45%);
+            background-color: hsla(118, 44%, 45%, .8);
         }
         &.warning {
-            background-color: hsl(56, 44%, 45%);
+            background-color: hsla(56, 44%, 45%, .8);
         }
         &.error {
-            background-color: hsl(0, 44%, 45%);
+            background-color: hsla(0, 44%, 45%, .8);
         }
         
         .close {
