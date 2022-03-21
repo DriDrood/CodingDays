@@ -23,15 +23,24 @@ export default {
         try {
             context.commit('setLoading', true)
             const result = await fetch(url, { method: 'POST', headers: { 'Content-type': 'application/json' }, body: JSON.stringify(data) })
-            const resultData = await result.json()
+            const resultBody = await result.text()
+            let resultData = null;
+            try
+            {
+                resultData = JSON.parse(resultBody)
+            }
+            catch
+            {
+                resultData = resultBody
+            }
 
             switch (result.status) {
                 case 400:
-                    privateMethods.handleUserError(context, resultData.message)
-                    throw new Error(resultData.message)
+                    privateMethods.handleUserError(context, resultData)
+                    throw new Error(resultData)
                 case 500:
-                    privateMethods.handleSystemError(context, resultData.message)
-                    throw new Error(resultData.message)
+                    privateMethods.handleSystemError(context, resultData)
+                    throw new Error(resultData)
             }
             
             return resultData;

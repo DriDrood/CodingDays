@@ -35,7 +35,7 @@ public class ExceptionMiddleware
     {
         httpContext.Response.StatusCode = (int)statusCode;
 
-        byte[] bodyAsByte = Encoding.UTF8.GetBytes($"{{\"message\":\"{exception.Message}\"}}");
+        byte[] bodyAsByte = Encoding.UTF8.GetBytes(exception.Message);
         return httpContext.Response.Body.WriteAsync(bodyAsByte, 0, bodyAsByte.Length);
     }
 }
