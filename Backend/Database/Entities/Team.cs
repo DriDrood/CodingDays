@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace CodingDays.Database.Entities;
-public class Team
+public class Team : IdentityUser<Guid>
 {
     public Team()
     {
@@ -11,13 +11,9 @@ public class Team
         Random random = new Random();
         byte[] buffer = new byte[6];
         random.NextBytes(buffer);
-        Name = Convert.ToBase64String(buffer);
+        UserName = Convert.ToBase64String(buffer);
     }
 
-    public Guid Id { get; set; } = Guid.NewGuid();
-
-    [StringLength(50)]
-    public string Name { get; set; }
     public ESteps CurrentStep { get; set; }
 
     public ICollection<CypherUsage> CypherUsages { get; set; } = new HashSet<CypherUsage>();

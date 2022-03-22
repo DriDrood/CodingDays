@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
     "secret": "2gD8xs5KtGE2S",
-    "cypherResult": "44222116"
+    "cypherResult": "84443339"
 }
 
 ###
@@ -34,3 +34,23 @@ Content-Type: application/json
 ###
 # @name ListTeams
 GET {{host}}/api/team/get
+
+###
+# @name RegisterTeam
+POST {{host}}/api/team/register
+Content-Type: application/json
+
+{
+    "secret": "2gD8xs5KtGE2S",
+    "password": "s2k4Ye"
+}
+
+###
+# @name LoginTeam
+POST {{host}}/api/team/login
+Content-Type: application/json
+
+{
+    "teamName": "227a",
+    "password": "s2k4Ye"
+}

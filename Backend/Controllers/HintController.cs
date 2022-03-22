@@ -4,22 +4,26 @@ using System.Threading.Tasks;
 using CodingDays.Database;
 using CodingDays.Database.Entities;
 using CodingDays.Exceptions;
+using CodingDays.Models.Config;
 using CodingDays.Models.Dto.Hint;
 using CodingDays.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodingDays.Controllers;
 public class HintController : ControllerBase
 {
-    public HintController(DB db)
+    public HintController(DB db, SecretHolder secretHolder)
     {
         _db = db;
+        _secretHolder = secretHolder;
     }
 
     private readonly DB _db;
+    private readonly SecretHolder _secretHolder;
 
-
+    [Authorize]
     public async Task<ActionResult<TryResp>> Try([FromBody]TryReq param)
     {
         Team team = _db.Teams.Find(param?.TeamId)
@@ -64,8 +68,7 @@ public class HintController : ControllerBase
 
     public async Task<InsertResp> InsertCypher([FromBody]InsertReq param)
     {
-        if (param.Secret != "2gD8xs5KtGE2S")
-            throw new UsageException("Chybný secret");
+        _secretHolder.ValidateSecret(param.Secret);
 
         string hash = CypherHasher.HashCypherResult(param.CypherResult);
 

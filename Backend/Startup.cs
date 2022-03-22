@@ -1,10 +1,12 @@
 using System;
+using CodingDays.Models.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CodingDays
 {
@@ -19,6 +21,11 @@ namespace CodingDays
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<JwtHolder>(sp => RegisterJwt(services));
+            services.AddSingleton<SecretHolder>(sp => GetSecretHolder());
+
+            services.AddSingleton<Utils.JwtHandler>();
+
             services.AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.3.0-mariadb")));
             services.AddControllers();
         }
@@ -28,6 +35,8 @@ namespace CodingDays
         {
             app.UseMiddleware<Exceptions.ExceptionMiddleware>();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/{controller}/{action}"));
 
             Setup(app, env);
@@ -40,6 +49,33 @@ namespace CodingDays
             var password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD");
 
             return $"server={host};port=3306;database=CodingDays;user=root;password={password}";
+        }
+        private JwtHolder RegisterJwt(IServiceCollection services)
+        {
+            string key = Environment.GetEnvironmentVariable("JWT_PRIVATE_KEY")
+                ?? throw new Exception("Missing JWT private key");
+            JwtHolder jwtHolder = new JwtHolder(key);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = jwtHolder.Key,
+                    };
+                });
+
+            return jwtHolder;
+        }
+        private SecretHolder GetSecretHolder()
+        {
+            string secret = Environment.GetEnvironmentVariable("SECRET")
+                ?? throw new Exception("Missing secret");
+
+            return new SecretHolder(secret);
         }
 
         private void Setup(IApplicationBuilder app, IWebHostEnvironment env)
