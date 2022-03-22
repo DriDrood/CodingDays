@@ -9,7 +9,7 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d
     depends_on:
-      - backend
+      - be
   be:
     build: Backend
     image: coding-days.backend
@@ -28,7 +28,7 @@ services:
     image: "mariadb:10.3"
     restart: "${RESTART}"
     ports:
-      - "${MYSQL_PORT}:3306"
+      - "8056:3306"
     volumes:
       - ./Data/DB:/var/lib/mysql
     environment:
