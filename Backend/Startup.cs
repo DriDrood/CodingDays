@@ -21,10 +21,12 @@ namespace CodingDays
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<JwtHolder>(sp => RegisterJwt(services));
+            JwtHolder jwtHolder = RegisterJwt(services);
+            services.AddSingleton<JwtHolder>(sp => jwtHolder);
             services.AddSingleton<SecretHolder>(sp => GetSecretHolder());
 
             services.AddSingleton<Utils.JwtHandler>();
+            services.AddScoped<Models.TeamHolder>();
 
             services.AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.3.0-mariadb")));
             services.AddControllers();
@@ -34,6 +36,7 @@ namespace CodingDays
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<Exceptions.ExceptionMiddleware>();
+            app.UseMiddleware<Utils.TeamMiddleware>();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -56,17 +59,9 @@ namespace CodingDays
                 ?? throw new Exception("Missing JWT private key");
             JwtHolder jwtHolder = new JwtHolder(key);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = jwtHolder.Key,
-                    };
-                });
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt => opt.TokenValidationParameters = Utils.JwtHandler.GetTokenParams(jwtHolder));
 
             return jwtHolder;
         }

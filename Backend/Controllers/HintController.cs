@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CodingDays.Database;
 using CodingDays.Database.Entities;
 using CodingDays.Exceptions;
+using CodingDays.Models;
 using CodingDays.Models.Config;
 using CodingDays.Models.Dto.Hint;
 using CodingDays.Utils;
@@ -14,23 +15,25 @@ using Microsoft.EntityFrameworkCore;
 namespace CodingDays.Controllers;
 public class HintController : ControllerBase
 {
-    public HintController(DB db, SecretHolder secretHolder)
+    public HintController(DB db, SecretHolder secretHolder, TeamHolder teamHolder)
     {
         _db = db;
         _secretHolder = secretHolder;
+        _teamHolder = teamHolder;
     }
 
     private readonly DB _db;
     private readonly SecretHolder _secretHolder;
+    private readonly TeamHolder _teamHolder;
 
     [Authorize]
-    public async Task<ActionResult<TryResp>> Try([FromBody]TryReq param)
+    public async Task<ActionResult<TryResp>> Try([FromBody] TryReq param)
     {
-        Team team = _db.Teams.Find(param?.TeamId)
+        Team team = _db.Teams.Find(_teamHolder.TeamId)
             ?? throw new UsageException("TeamId je chybné");
         if (team.CurrentStep == ESteps.NotStarted)
             throw new UsageException("Hra ještě nezačala");
-        Cypher cypher = _db.Cyphers.Find(param?.CypherResult)
+        Cypher cypher = _db.Cyphers.Find(param.CypherResult)
             ?? throw new UsageException("Výsledek šifry je chybný");
 
         Hint? hint = _db.CypherUsages
@@ -48,11 +51,12 @@ public class HintController : ControllerBase
             .FirstOrDefault(h => h.Step == team.CurrentStep && !h.CypherUsages.Any());
 
         // all hints are used
-        if (hint is null) {
+        if (hint is null)
+        {
             hint = _db.Hints.Find(Guid.Parse("00000000-0000-0000-0000-000000000001")) ?? throw new AdminException("Missing default hint");
             return new TryResp(false, hint.Text, hint.ImageUrl);
         }
-        
+
         // register new usage
         CypherUsage newUsage = new CypherUsage()
         {
@@ -66,7 +70,7 @@ public class HintController : ControllerBase
         return new TryResp(false, hint.Text, hint.ImageUrl);
     }
 
-    public async Task<InsertResp> InsertCypher([FromBody]InsertReq param)
+    public async Task<InsertResp> InsertCypher([FromBody] InsertReq param)
     {
         _secretHolder.ValidateSecret(param.Secret);
 
@@ -80,7 +84,7 @@ public class HintController : ControllerBase
         // create
         Cypher cypher = new Cypher(hash, param.CypherResult);
         _db.Add(cypher);
-        
+
         await _db.SaveChangesAsync();
 
         return new InsertResp(hash);

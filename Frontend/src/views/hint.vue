@@ -1,5 +1,6 @@
 <template>
-    <main class="hint">
+    <Login v-if="login.token == null" />
+    <main v-else class="hint">
         <div class="picker">
             <span v-for="index in count" :key="`i-${index}`">{{ result[index - 1] ?? "_" }}</span>
             <button v-if="result.length < count" @click="select">Vlož {{ current }}</button>
@@ -15,9 +16,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import Login from './login.vue'
 
 export default {
     name: "hint",
+    components: {
+        Login,
+    },
     props: {
         count: {
             type: Number,
@@ -29,7 +34,7 @@ export default {
         current: 0,
     }),
     computed: {
-        ...mapState(['hint'])
+        ...mapState(['hint', 'login'])
     },
     methods: {
         select() {

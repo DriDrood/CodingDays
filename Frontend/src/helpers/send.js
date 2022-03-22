@@ -22,7 +22,12 @@ export default {
     post: async (context, url, data) => {
         try {
             context.commit('setLoading', true)
-            const result = await fetch(url, { method: 'POST', headers: { 'Content-type': 'application/json' }, body: JSON.stringify(data) })
+            
+            const headers = { 'Content-type': 'application/json' }
+            if (context.rootState.login.token != null)
+                headers['Authorization'] = `Bearer ${context.rootState.login.token}`
+                
+            const result = await fetch(url, { method: 'POST', headers, body: JSON.stringify(data) })
             const resultBody = await result.text()
             let resultData = null;
             try

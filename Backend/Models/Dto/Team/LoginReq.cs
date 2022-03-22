@@ -1,6 +1,6 @@
 namespace CodingDays.Models.Dto.Team;
 public record LoginReq
 (
-    string TeamName,
+    string Name,
     string Password
 );

@@ -19,7 +19,7 @@ export default {
         hintSendCode: async (context, payload) => {
             const encodedCode = encode.encode(payload.code)
     
-            const data = await send.post(context, '/api/hint/try', { cypherResult: encodedCode, teamId: '15c1b27b-db31-42ac-b935-5d8b1e040e1a' })
+            const data = await send.post(context, '/api/hint/try', { cypherResult: encodedCode })
 
             context.commit('hintSendCode', data)
             

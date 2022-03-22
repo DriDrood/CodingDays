@@ -25,6 +25,7 @@ Content-Type: application/json
 # @name TryHint
 POST {{host}}/api/hint/try
 Content-Type: application/json
+Authorization: Bearer {{LoginTeam.response.body.token}}
 
 {
     "teamId": "15c1b27b-db31-42ac-b935-5d8b1e040e1a",
@@ -51,6 +52,6 @@ POST {{host}}/api/team/login
 Content-Type: application/json
 
 {
-    "teamName": "227a",
+    "name": "227a",
     "password": "s2k4Ye"
 }

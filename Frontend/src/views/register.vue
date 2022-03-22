@@ -7,7 +7,7 @@
     <div>
       Zbývá {{ remains }} míst. Ve frontě je {{ queue }} lidí.
     </div>
-    <form @submit="send" method="post" action="/api/register">
+    <form @submit="send" method="post" action="/api/register/register">
       <label for="name">Jméno:*</label>
       <input type="text" v-model="name" id="name" required />
       <label for="surname">Příjmení:*</label>
@@ -96,18 +96,10 @@ export default {
 
 <style lang="scss">
 .register {
-  display: grid;
   justify-items: center;
 
   div {
       margin-bottom: 1rem;
-      max-width: 90%;
-  }
-  
-  form {
-      display: grid;
-      align-self: start;
-
       max-width: 90%;
   }
 } 

@@ -30,7 +30,7 @@ public class TeamController : ControllerBase
 
     public async Task<LoginResp> Login([FromBody] LoginReq param)
     {
-        Team team = await _db.Teams.FirstOrDefaultAsync(t => t.UserName == param.TeamName)
+        Team team = await _db.Teams.FirstOrDefaultAsync(t => t.UserName == param.Name)
             ?? throw new UsageException("Team nenalezen");
 
         PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(team, team.PasswordHash, param.Password);

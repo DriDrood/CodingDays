@@ -90,6 +90,17 @@ a:hover {
             }
         }
     }
+
+    main {
+        display: grid;
+    }
+}
+
+form {
+    display: grid;
+    align-self: start;
+
+    max-width: 90%;
 }
 
 /* inputs */

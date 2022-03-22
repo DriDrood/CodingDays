@@ -11,14 +11,16 @@ namespace CodingDays.Utils;
 
 public class JwtHandler
 {
-    public JwtHandler(JwtHolder config)
+    public JwtHandler(JwtHolder holder)
     {
-        _config = config;
+        _holder = holder;
         _options = new JwtBearerOptions();
+        _jwtTokenHandler = new JwtSecurityTokenHandler();
     }
 
-    private readonly JwtHolder _config;
+    private readonly JwtHolder _holder;
     private readonly JwtBearerOptions _options;
+    private readonly JwtSecurityTokenHandler _jwtTokenHandler;
 
     public string GenerateToken(Team team)
     {
@@ -31,47 +33,39 @@ public class JwtHandler
             Expires = DateTime.UtcNow.AddDays(1),
             Subject = new ClaimsIdentity(new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, team.Id.ToString()),
                 new Claim(ClaimTypes.GivenName, team.UserName),
             }),
-            SigningCredentials = new SigningCredentials(_config.Key, SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(_holder.Key, SecurityAlgorithms.HmacSha256Signature)
         };
-        var jwtTokenHandler = new JwtSecurityTokenHandler();
-        var jwtToken = jwtTokenHandler.CreateJwtSecurityToken(tokenDescriptor);
-        var token = jwtTokenHandler.WriteToken(jwtToken);
+        var jwtToken = _jwtTokenHandler.CreateJwtSecurityToken(tokenDescriptor);
+        var token = _jwtTokenHandler.WriteToken(jwtToken);
 
         return token;
     }
 
-    // public bool ValidateToken(string token)
-    // {
-    //     List<Exception>? validationFailures = null;
-    //     SecurityToken validatedToken;
-    //     foreach (var validator in _options.SecurityTokenValidators)
-    //     {
-    //         if (validator.CanReadToken(token))
-    //         {
-    //             ClaimsPrincipal principal;
-    //             try
-    //             {
-    //                 principal = validator.ValidateToken(token, _options.TokenValidationParameters, out validatedToken);
-    //             }
-    //             catch (Exception ex)
-    //             {
-    //                 // Refresh the configuration for exceptions that may be caused by key rollovers. The user can also request a refresh in the event.
-    //                 if (_options.RefreshOnIssuerKeyNotFound && _options.ConfigurationManager != null
-    //                     && ex is SecurityTokenSignatureKeyNotFoundException)
-    //                 {
-    //                     _options.ConfigurationManager.RequestRefresh();
-    //                 }
+    public Guid? ReadTeamIdFromToken(string? bearer)
+    {
+        if (bearer is null)
+            return null;
 
-    //                 if (validationFailures == null)
-    //                     validationFailures = new List<Exception>(1);
-    //                 validationFailures.Add(ex);
-    //                 continue;
-    //             }
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
+        string token = bearer.Substring("Bearer ".Length);
+        ClaimsPrincipal claims = _jwtTokenHandler.ValidateToken(token, GetTokenParams(_holder), out SecurityToken _);
+
+        string? idString = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        return Guid.TryParse(idString, out Guid teamId)
+            ? teamId
+            : null;
+    }
+
+    public static TokenValidationParameters GetTokenParams(JwtHolder jwtHolder)
+    {
+        return new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = jwtHolder.Key,
+        };
+    }
 }
