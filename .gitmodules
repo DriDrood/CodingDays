@@ -1,6 +1,6 @@
-[submodule "Data/team-227a"]
-	path = Data/team-227a
+[submodule "Main/Data/team-227a"]
+	path = Main/Data/team-227a
 	url = git@github.com:Dumba/team-227a.git
-[submodule "Data/team-ac15"]
-	path = Data/team-ac15
+[submodule "Main/Data/team-ac15"]
+	path = Main/Data/team-ac15
 	url = git@github.com:Dumba/team-ac15.git

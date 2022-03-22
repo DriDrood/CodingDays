@@ -1,0 +1,38 @@
+version: "3"
+services:
+  fe:
+    build: Frontend
+    image: coding-days.frontend
+    restart: "${RESTART}"
+    ports:
+      - "8050:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - backend
+  be:
+    build: Backend
+    image: coding-days.backend
+    restart: "${RESTART}"
+    volumes:
+      - ./Data:/app/Data
+    environment:
+      MYSQL_HOST: "${MYSQL_HOST}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      JWT_PRIVATE_KEY: "${JWT_PRIVATE_KEY}"
+      SECRET: "${SECRET}"
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      - db
+  db:
+    image: "mariadb:10.3"
+    restart: "${RESTART}"
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ./Data/DB:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_czech_ci']
