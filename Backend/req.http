@@ -37,7 +37,7 @@ Authorization: Bearer {{LoginTeam.response.body.token}}
 # @name ListTeams
 GET {{host}}/api/team/get
 
-### s2k4Ye F7d8Jm
+###
 # @name RegisterTeam
 POST {{host}}/api/team/register
 Content-Type: application/json
