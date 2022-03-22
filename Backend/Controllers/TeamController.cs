@@ -24,14 +24,28 @@ public class TeamController : ControllerBase
             .Include(t => t.Registrations)
             .ToArrayAsync();
         
-        Dictionary<Guid, GetRespTeam> response = teams.ToDictionary(
-            t => t.Id, 
-            t => new GetRespTeam(
-                t.Name, 
-                t.CurrentStep == ESteps.Done, 
-                t.CurrentStep == ESteps.Done
-                    ? t.Registrations.Select(r => $"{r.Name} {r.Surname}").ToArray()
-                    : new string[0]));
+        Dictionary<Guid, GetRespTeam> response = new Dictionary<Guid, GetRespTeam>();
+        foreach(Team team in teams)
+        {
+            string filePath = System.IO.Path.Combine(".", "Data", $"Team-{team.Id}", $"{team.Name}.txt");
+            bool finished = System.IO.File.Exists(filePath);
+            string[] members = new string[0];
+
+            if (finished)
+            {
+                DateTime[] birthDates = System.IO.File.ReadAllLines(filePath)
+                    .Select(l => DateTime.TryParse(l, out DateTime birthDate) ? birthDate : DateTime.UtcNow)
+                    .ToArray();
+                members = birthDates
+                    .Select(bd => team.Registrations.FirstOrDefault(r => r.Birth == bd))
+                    .Where(mn => mn is not null)
+                    .Select(mn => $"{mn!.Name} {mn.Surname}")
+                    .ToArray();
+            }
+
+            GetRespTeam teamResp = new GetRespTeam(team.Name, finished, members);
+            response[team.Id] = teamResp;
+        }
 
         return new GetResp(response);
     }

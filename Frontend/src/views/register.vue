@@ -9,19 +9,19 @@
     </div>
     <form @submit="send" method="post" action="/api/register">
       <label for="name">Jméno:*</label>
-      <input type="text" name="name" id="name" required />
+      <input type="text" v-model="name" id="name" required />
       <label for="surname">Příjmení:*</label>
-      <input type="text" name="surname" id="surname" required />
+      <input type="text" v-model="surname" id="surname" required />
       <label for="birth">Datum narození:*</label>
-      <input type="date" name="birth" id="birth" required />
+      <input type="date" v-model="birth" id="birth" required />
       <label for="phone">Telefon:*</label>
-      <input type="tel" name="phone" id="phone" required />
+      <input type="tel" v-model="phone" id="phone" required />
       <label for="email">E-mail:*</label>
-      <input type="email" name="email" id="email" required />
+      <input type="email" v-model="email" id="email" required />
       <label for="needNtb">Potřebuji půjčit notebook (nemám žádný použitelný):</label>
-      <input type="checkbox" name="needNtb" id="needNtb" />
+      <input type="checkbox" v-model="needNtb" id="needNtb" />
       <label for="level">Úroveň programování:</label>
-      <select name="level" id="level">
+      <select v-model="level" id="level">
         <option value="0">Nikdy jsem neprogramoval, ale zajímá mě to</option>
         <option value="1">Už jsem si hrál ve scratchi / kreslil se želvou</option>
         <option value="2"> Zvládám základy ve "skutečném" programovacím jazyku (if, for, while, funkce, ...)</option>
@@ -30,9 +30,9 @@
         <option value="5">Dělám to profesionálně, můžu to klidně učit</option>
       </select>
       <label for="languages">Programovací jazyky, ve kterých jsem napsal alespoň jeden program:</label>
-      <input type="text" name="languages" id="languages" />
+      <input type="text" v-model="languages" id="languages" />
       <label for="note">Poznámka: <br />(např. diety, panický strach z plyšových medvídků, našel jsi tady nebo v pozvánce chybu, atd.)</label>
-      <textarea name="note" id="note" cols="30" rows="3"></textarea>
+      <textarea v-model="note" id="note" cols="30" rows="3"></textarea>
       <!-- <label for="bonus">Odhalil jsem tohle schované pole:*</label>
         <input type="checkbox" id="bonus" name="bonus" value="true" /> -->
       <button>Odeslat</button>
@@ -43,6 +43,18 @@
 <script>
 export default {
   name: "register",
+  data: () => ({
+    name: '',
+    surname: '',
+    birth: null,
+    phone: '',
+    email: '',
+    needNtb: false,
+    level: 0,
+    languages: '',
+    note: '',
+    bonus: null,
+  }),
   computed: {
     remains() {
       if (this.$store.state.register.count == null)
@@ -61,7 +73,19 @@ export default {
     send(ev) {
       ev.preventDefault()
 
-
+      const data = {
+        name: this.name,
+        surname: this.surname,
+        birth: this.birth,
+        phone: this.phone,
+        email: this.email,
+        needNtb: this.needNtb,
+        level: this.level,
+        languages: this.languages,
+        note: this.note,
+        bonus: document.getElementById('bonus')?.value ?? null,
+      }
+      this.$store.dispatch('registerSend', data)
     }
   },
   mounted() {

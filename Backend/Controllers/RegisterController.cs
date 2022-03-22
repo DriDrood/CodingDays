@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using CodingDays.Database;
 using CodingDays.Database.Entities;
@@ -17,28 +16,21 @@ namespace CodingDays.Controllers
         private readonly DB _db;
 
         [HttpPost]
-        public ActionResult Register(RegistrationReq registration)
+        public ActionResult Register([FromBody] RegistrationReq registration)
         {
-            try
-            {
-                var reg = new Registration(registration);
+            var reg = new Registration(registration);
 
-                _db.Add(reg);
-                _db.SaveChanges();
+            _db.Add(reg);
+            _db.SaveChanges();
 
-                return Redirect("/done.html");
-            }
-            catch (Exception)
-            {
-                return Redirect("/error.html");
-            }
+            return Ok(reg.Id);
         }
 
         [HttpGet]
         public CountResp Count()
         {
             var registrationCount = _db.Registrations.Count();
-            
+
             return new CountResp(registrationCount);
         }
 

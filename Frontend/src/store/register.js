@@ -18,15 +18,10 @@ export default {
         },
         // 
         registerSend: async (context, payload) => {
-            try {
-                await post(context, '/api/register/register', payload)
+            await send.post(context, '/api/register/register', payload)
 
-                context.commit('pageChange', 'register-done')
-            }
-            catch (err) {
-                console.error(err);
-                context.commit('pageChange', 'error')
-            }
+            context.dispatch('registerCount')
+            context.dispatch('notificationsAdd', { text: 'Registrace úspěšně odeslána', type: 'success' })
         },
     },
 }
