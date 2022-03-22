@@ -24,6 +24,8 @@ public class HintController : ControllerBase
     {
         Team team = _db.Teams.Find(param?.TeamId)
             ?? throw new UsageException("TeamId je chybné");
+        if (team.CurrentStep == ESteps.NotStarted)
+            throw new UsageException("Hra ještě nezačala");
         Cypher cypher = _db.Cyphers.Find(param?.CypherResult)
             ?? throw new UsageException("Výsledek šifry je chybný");
 
