@@ -28,7 +28,7 @@ services:
     image: "mariadb:10.3"
     restart: "${RESTART}"
     ports:
-      - "8056:3306"
+      - "${MYSQL_PORT}:3306"
     volumes:
       - ./Data/DB:/var/lib/mysql
     environment:

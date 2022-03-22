@@ -1,4 +1,5 @@
 @host = http://localhost:5000
+# @host = http://localhost:8050
 
 ###
 # @name Register
@@ -43,6 +44,7 @@ Content-Type: application/json
 
 {
     "secret": "2gD8xs5KtGE2S",
+    "id": "3287b14d-ed8b-4766-a8c1-7e50ad3052ca",
     "password": "s2k4Ye" 
 }
 

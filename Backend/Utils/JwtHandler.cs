@@ -24,7 +24,7 @@ public class JwtHandler
 
     public string GenerateToken(Team team)
     {
-        var tokenDescriptor = new SecurityTokenDescriptor
+        SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
         {
             Issuer = null,
             Audience = null,
@@ -38,8 +38,8 @@ public class JwtHandler
             }),
             SigningCredentials = new SigningCredentials(_holder.Key, SecurityAlgorithms.HmacSha256Signature)
         };
-        var jwtToken = _jwtTokenHandler.CreateJwtSecurityToken(tokenDescriptor);
-        var token = _jwtTokenHandler.WriteToken(jwtToken);
+        JwtSecurityToken jwtToken = _jwtTokenHandler.CreateJwtSecurityToken(tokenDescriptor);
+        string token = _jwtTokenHandler.WriteToken(jwtToken);
 
         return token;
     }

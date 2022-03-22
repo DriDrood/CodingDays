@@ -48,10 +48,14 @@ namespace CodingDays
         private string GetConnectionString()
         {
             // get config from env
-            var host = Environment.GetEnvironmentVariable("MYSQL_HOST");
-            var password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD");
+            string host = Environment.GetEnvironmentVariable("MYSQL_HOST")
+                ?? throw new Exception("Missing MYSQL_HOST");
+            string port = Environment.GetEnvironmentVariable("MYSQL_PORT")
+                ?? throw new Exception("Missing MYSQL_PORT");
+            string password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD")
+                ?? throw new Exception("Missing MYSQL_ROOT_PASSWORD");
 
-            return $"server={host};port=3306;database=CodingDays;user=root;password={password}";
+            return $"server={host};port={port};database=CodingDays;user=root;password={password}";
         }
         private JwtHolder RegisterJwt(IServiceCollection services)
         {
@@ -76,7 +80,7 @@ namespace CodingDays
         private void Setup(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // scoped
-            using (var serviceScope = app.ApplicationServices
+            using (IServiceScope serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {

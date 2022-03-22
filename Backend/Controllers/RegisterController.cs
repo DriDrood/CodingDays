@@ -18,7 +18,7 @@ namespace CodingDays.Controllers
         [HttpPost]
         public ActionResult Register([FromBody] RegistrationReq registration)
         {
-            var reg = new Registration(registration);
+            Registration reg = new Registration(registration);
 
             _db.Add(reg);
             _db.SaveChanges();
@@ -29,7 +29,7 @@ namespace CodingDays.Controllers
         [HttpGet]
         public CountResp Count()
         {
-            var registrationCount = _db.Registrations.Count();
+            int registrationCount = _db.Registrations.Count();
 
             return new CountResp(registrationCount);
         }
@@ -37,7 +37,7 @@ namespace CodingDays.Controllers
         [HttpGet]
         public ActionResult ListNoobs()
         {
-            var registrations = _db.Registrations.ToArray();
+            Registration[] registrations = _db.Registrations.ToArray();
             return Ok(registrations);
         }
     }

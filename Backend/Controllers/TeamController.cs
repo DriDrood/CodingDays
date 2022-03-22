@@ -46,7 +46,7 @@ public class TeamController : ControllerBase
     {
         _secretHolder.ValidateSecret(param.Secret);
 
-        Guid id = Guid.NewGuid();
+        Guid id = param.Id ?? Guid.NewGuid();
         Team team = new Team
         {
             Id = id,
