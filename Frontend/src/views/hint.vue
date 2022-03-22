@@ -3,8 +3,8 @@
         <div class="picker">
             <span v-for="index in count" :key="`i-${index}`">{{ result[index - 1] ?? "_" }}</span>
             <button v-if="result.length < count" @click="select">Vlož {{ current }}</button>
-            <button v-else @click="send">Odeslat</button>
-            <button @click="reset">Reset</button>
+            <button v-else class="primary" @click="send">Odeslat</button>
+            <button class="danger" @click="reset">Reset</button>
         </div>
         <div class="response">
             <span v-if="hint.response.text">{{ hint.response.text }}</span>

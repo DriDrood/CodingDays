@@ -35,7 +35,7 @@
       <textarea v-model="note" id="note" cols="30" rows="3"></textarea>
       <!-- <label for="bonus">Odhalil jsem tohle schované pole:*</label>
         <input type="checkbox" id="bonus" name="bonus" value="true" /> -->
-      <button>Odeslat</button>
+      <button class="primary">Odeslat</button>
     </form>
   </main>
 </template>

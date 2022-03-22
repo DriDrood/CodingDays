@@ -124,10 +124,25 @@ select:hover {
 
 button {
     cursor: pointer;
-    background-color: hsl(101, 43%, 57%);
-}
-button:hover {
-    background-color: hsl(101, 43%, 70%);
+
+    background-color: hsl(0, 0%, 57%);
+    &:hover {
+        background-color: hsl(0, 0%, 70%);
+    }
+
+    &.primary {
+        background-color: hsl(101, 43%, 57%);
+        &:hover {
+            background-color: hsl(101, 43%, 70%);
+        }
+    }
+
+    &.danger {
+        background-color: hsl(0, 43%, 57%);
+        &:hover {
+            background-color: hsl(0, 43%, 70%);
+        }
+    }
 }
 
 select {
