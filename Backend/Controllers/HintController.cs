@@ -22,10 +22,10 @@ public class HintController : ControllerBase
 
     public async Task<ActionResult<TryResp>> Try([FromBody]TryReq param)
     {
-        Cypher cypher = _db.Cyphers.Find(param?.CypherResult)
-            ?? throw new UsageException("CypherResult is invalid");
         Team team = _db.Teams.Find(param?.TeamId)
-            ?? throw new UsageException("Team is invalid");
+            ?? throw new UsageException("TeamId je chybné");
+        Cypher cypher = _db.Cyphers.Find(param?.CypherResult)
+            ?? throw new UsageException("Výsledek šifry je chybný");
 
         Hint? hint = _db.CypherUsages
             .Include(cu => cu.Hint)
@@ -43,7 +43,7 @@ public class HintController : ControllerBase
 
         // all hints are used
         if (hint is null) {
-            hint = _db.Hints.Find(Guid.Parse("00000000-0000-0000-0000-000000000001")) ?? throw new AdminException("Missing default hint!");
+            hint = _db.Hints.Find(Guid.Parse("00000000-0000-0000-0000-000000000001")) ?? throw new AdminException("Missing default hint");
             return new TryResp(false, hint.Text, hint.ImageUrl);
         }
         
@@ -62,12 +62,15 @@ public class HintController : ControllerBase
 
     public async Task<InsertResp> InsertCypher([FromBody]InsertReq param)
     {
+        if (param.Secret != "2gD8xs5KtGE2S")
+            throw new UsageException("Chybný secret");
+
         string hash = CypherHasher.HashCypherResult(param.CypherResult);
 
         // already exists
         bool alreadyExists = _db.Cyphers.Any(c => c.Id == hash);
         if (alreadyExists)
-            throw new UsageException("Cypher already exists");
+            throw new UsageException("Šifra už existuje");
 
         // create
         Cypher cypher = new Cypher(hash, param.CypherResult);

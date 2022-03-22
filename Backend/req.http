@@ -17,6 +17,7 @@ POST {{host}}/api/hint/insertCypher
 Content-Type: application/json
 
 {
+    "secret": "2gD8xs5KtGE2S",
     "cypherResult": "44222116"
 }
 
