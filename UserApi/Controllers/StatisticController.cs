@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodingDays.UserApi.Controllers;
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class StatisticController : ControllerBase
 {
     public StatisticController(DB db)

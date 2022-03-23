@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CodingDays.UserApi.Controllers;
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PrivateController : ControllerBase
 {
     public PrivateController(DB db, AuthHolder authHolder)

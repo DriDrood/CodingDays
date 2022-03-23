@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CodingDays.UserApi.Controllers;
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class SessionController : ControllerBase
 {
     public SessionController(DB db, JwtHandler jwtHandler, SecretHolder secretHolder)
