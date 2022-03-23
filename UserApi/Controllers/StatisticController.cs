@@ -1,5 +1,6 @@
+using System.Linq;
 using CodingDays.UserApi.Database;
-using CodingDays.UserApi.Models.Dto.User;
+using CodingDays.UserApi.Models.Dto.Statistic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodingDays.UserApi.Controllers;

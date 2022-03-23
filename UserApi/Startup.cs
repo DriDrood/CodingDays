@@ -1,4 +1,9 @@
+using System;
+using CodingDays.UserApi.Models.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingDays.UserApi;
 public static class Startup
@@ -7,6 +12,12 @@ public static class Startup
     {
         builder.Services
             .AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.3.0-mariadb")))
+            .AddJwt()
+            .AddSecret()
+
+            .AddSingleton<Utils.JwtHandler>()
+            .AddScoped<Models.AuthHolder>()
+
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddControllers();
@@ -19,6 +30,8 @@ public static class Startup
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.UseMiddleware<Exceptions.ExceptionMiddleware>();
+        app.UseMiddleware<Utils.AuthMiddleware>();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
@@ -40,6 +53,30 @@ public static class Startup
             ?? throw new Exception("Missing MYSQL_ROOT_PASSWORD");
 
         return $"server={host};port={port};database=CodingDays;user=root;password={password}";
+    }
+
+    private static IServiceCollection AddJwt(this IServiceCollection services)
+    {
+        string key = Environment.GetEnvironmentVariable("JWT_PRIVATE_KEY")
+            ?? throw new Exception("Missing JWT private key");
+        JwtHolder jwtHolder = new JwtHolder(key);
+
+        services
+            .AddSingleton<JwtHolder>(sp => jwtHolder)
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt => opt.TokenValidationParameters = Utils.JwtHandler.GetTokenParams(jwtHolder));
+
+        return services;
+    }
+    private static IServiceCollection AddSecret(this IServiceCollection services)
+    {
+        string secret = Environment.GetEnvironmentVariable("SECRET")
+            ?? throw new Exception("Missing secret");
+
+        SecretHolder secretHolder = new SecretHolder(secret);
+        services.AddSingleton<SecretHolder>(sp => secretHolder);
+
+        return services;
     }
 
     private static void Setup(WebApplication app)
