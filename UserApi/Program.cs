@@ -1,7 +1,7 @@
 using CodingDays.UserApi;
 
-Host
-    .CreateDefaultBuilder(args)
-    .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+WebApplication.CreateBuilder(args)
+    .ConfigureServices()
     .Build()
+    .Configure()
     .Run();

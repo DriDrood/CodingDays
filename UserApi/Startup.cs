@@ -1,43 +1,35 @@
-using System;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingDays.UserApi;
-public class Startup
+public static class Startup
 {
-    public Startup(IConfiguration configuration)
+    public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
-        _configuration = configuration;
-    }
+        builder.Services
+            .AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.3.0-mariadb")))
+            .AddEndpointsApiExplorer()
+            .AddSwaggerGen()
+            .AddControllers();
 
-    private IConfiguration _configuration;
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.3.0-mariadb")));
-        services.AddControllers();
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        return builder;
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public static WebApplication Configure(this WebApplication app)
     {
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseEndpoints(routes => routes.MapControllerRoute("default", "api/{controller}/{action}"));
+        app.MapControllers();
 
-        Setup(app, env);
+        Setup(app);
+
+        return app;
     }
 
-    private string GetConnectionString()
+    private static string GetConnectionString()
     {
         // get config from env
         string host = Environment.GetEnvironmentVariable("MYSQL_HOST")
@@ -50,12 +42,10 @@ public class Startup
         return $"server={host};port={port};database=CodingDays;user=root;password={password}";
     }
 
-    private void Setup(IApplicationBuilder app, IWebHostEnvironment env)
+    private static void Setup(WebApplication app)
     {
         // scoped
-        using (IServiceScope serviceScope = app.ApplicationServices
-            .GetRequiredService<IServiceScopeFactory>()
-            .CreateScope())
+        using (IServiceScope serviceScope = app.Services.CreateScope())
         {
             serviceScope.ServiceProvider.GetService<Database.DB>()!.Database.Migrate();
         }

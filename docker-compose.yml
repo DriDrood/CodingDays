@@ -36,3 +36,15 @@ services:
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_czech_ci']
+  db_227a:
+    image: "mariadb:10.3"
+    restart: "${RESTART}"
+    ports:
+      - "8057:3306"
+    volumes:
+      - ./Data/DB_227a:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_czech_ci']
