@@ -1,0 +1,31 @@
+@host = http://localhost:5226
+
+###
+# @name GetUserCount
+GET {{host}}/api/statistic/getUserCount
+
+###
+# @name Register
+POST {{host}}/api/session/register
+Content-Type: application/json
+
+{
+    "secret": "2gD8xs5KtGE2S",
+    "name": "admin",
+    "password": "mCHb8nWn95"
+}
+
+###
+# @name Login
+POST {{host}}/api/session/login
+Content-Type: application/json
+
+{
+    "name": "admin",
+    "password": "mCHb8nWn95"
+}
+
+###
+# @name Dashboard
+GET {{host}}/api/private/getDashboard
+Authorization: Bearer {{Login.response.body.token}}

@@ -12,9 +12,9 @@ export default createStore({
     login: (state, payload) => {
       state.token = payload.token
     },
-    // ???
+    // dashboard
     loadDashboard: (state, payload) => {
-      state.dashboard = payload
+      state.dashboard = payload.dashboard
     },
   },
   actions: {

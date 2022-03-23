@@ -28,6 +28,12 @@ public class SessionController : ControllerBase
     private readonly JwtHandler _jwtHandler;
     private readonly SecretHolder _secretHolder;
 
+    [HttpGet("[action]")]
+    public ActionResult LoginGui()
+    {
+        return Redirect("/");
+    }
+
     [HttpPost("[action]")]
     public async Task<LoginResp> Login(LoginReq param)
     {
