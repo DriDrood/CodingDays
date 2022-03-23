@@ -1,5 +1,4 @@
 namespace CodingDays.Database.Entities;
-
 public enum ESteps
 {
     NotStarted,

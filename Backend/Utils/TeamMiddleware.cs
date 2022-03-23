@@ -4,7 +4,6 @@ using CodingDays.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace CodingDays.Utils;
-
 public class TeamMiddleware
 {
     public TeamMiddleware(RequestDelegate next)

@@ -1,5 +1,4 @@
 namespace CodingDays.Models.Dto.Team;
-
 public record GetRespTeam
 (
     string Name,

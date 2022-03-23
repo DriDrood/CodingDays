@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CodingDays.Utils;
-
 public class JwtHandler
 {
     public JwtHandler(JwtHolder holder)

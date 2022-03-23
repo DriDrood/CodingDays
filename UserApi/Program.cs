@@ -1,7 +1,4 @@
 using CodingDays.UserApi;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
 Host
     .CreateDefaultBuilder(args)

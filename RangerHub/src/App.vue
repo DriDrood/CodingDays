@@ -68,7 +68,7 @@ header {
     align-content: center;
     grid-auto-flow: column;
     color: white;
-    background-color: hsl(202, 78%, 45%);
+    background-color: hsl(106, 64%, 34%);
 
     .error {
         width: 300px;
