@@ -7,7 +7,7 @@ services:
     ports:
       - "8060:80"
     volumes:
-      - ./UserGui/nginx:/etc/nginx/conf.d
+      - ./RangerHub/nginx:/etc/nginx/conf.d
     depends_on:
       - temp
       - be_227a
