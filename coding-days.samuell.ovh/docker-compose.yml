@@ -26,7 +26,7 @@ services:
     depends_on:
       - db
   db:
-    image: "mariadb:10.3"
+    image: "mariadb:10.7.3"
     restart: "${RESTART}"
     ports:
       - "8056:3306"

@@ -26,7 +26,7 @@ public class Startup
         services.AddSingleton<Utils.JwtHandler>();
         services.AddScoped<Models.TeamHolder>();
 
-        services.AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.3.0-mariadb")));
+        services.AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.7.3-mariadb")));
         services.AddControllers();
     }
 
@@ -53,7 +53,7 @@ public class Startup
         string password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD")
             ?? throw new Exception("Missing MYSQL_ROOT_PASSWORD");
 
-        return $"server={host};port={port};database=CodingDays;user=root;password={password}";
+        return $"server={host};port={port};database=CodingDays;user=root;password={password};ConnectionTimeout=0;DefaultCommandTimeout=0";
     }
     private JwtHolder RegisterJwt(IServiceCollection services)
     {

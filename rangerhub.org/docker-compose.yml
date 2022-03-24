@@ -26,7 +26,7 @@ services:
     depends_on:
       - db_227a
   db_227a:
-    image: "mariadb:10.3"
+    image: "mariadb:10.7.3"
     restart: "${RESTART}"
     ports:
       - "8066:3306"
@@ -63,7 +63,7 @@ services:
     depends_on:
       - db_ac15
   db_ac15:
-    image: "mariadb:10.3"
+    image: "mariadb:10.7.3"
     restart: "${RESTART}"
     ports:
       - "8067:3306"
