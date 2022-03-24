@@ -1,5 +1,6 @@
 # @host = http://localhost:5226
-@host = http://localhost:8063
+# @host = http://localhost:8063
+@host = https://users-0b60.rangerhub.org
 
 ###
 # @name GetUserCount

@@ -1,4 +1,5 @@
-@host = http://localhost:8061
+# @host = http://localhost:8061
+@host = https://weather.rangerhub.org
 
 ###
 # @name GetTemp
