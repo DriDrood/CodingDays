@@ -29,7 +29,7 @@ public static class Startup
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public static WebApplication Configure(this WebApplication app)
     {
-        app.UseCors();
+        app.UseCors("def");
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseMiddleware<Exceptions.ExceptionMiddleware>();
