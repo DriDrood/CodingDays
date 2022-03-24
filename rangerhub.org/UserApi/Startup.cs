@@ -18,6 +18,7 @@ public static class Startup
             .AddSingleton<Utils.JwtHandler>()
             .AddScoped<Models.AuthHolder>()
 
+            .AddCors(opt => opt.AddPolicy("def", corsBuilder => corsBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()))
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddControllers();
@@ -28,6 +29,7 @@ public static class Startup
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public static WebApplication Configure(this WebApplication app)
     {
+        app.UseCors();
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseMiddleware<Exceptions.ExceptionMiddleware>();

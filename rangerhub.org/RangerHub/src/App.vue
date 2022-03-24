@@ -2,7 +2,8 @@
     <header>
         <template v-if="logged">
             <div class="team">Tým: {{ name }}</div>
-            <div class="temp">{{ temp }}</div>
+            <div class="temp">Teplota: {{ temp }}</div>
+            <div class="users">Počet uživatelů: {{ userCount }} </div>
         </template>
         <template v-else>
             <div class="error">{{ error }}</div>
@@ -20,6 +21,8 @@
 </template>
 
 <script>
+import jwtDecode from 'jwt-decode'
+
 export default {
   name: 'app',
   data: () => ({
@@ -27,23 +30,50 @@ export default {
       name: '',
       password: '',
       temp: null,
-      logged: false,
+      userCount: null,
+      token: null,
   }),
+  computed: {
+      logged() {
+          return this.token != null
+      }
+  },
   methods: {
     async send(ev) {
         ev.preventDefault()
         
+        // login
         const response = await fetch('https://weather.rangerhub.org/api/team/loginTeam', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ name: this.name, password: this.password }) })
-
-        if (response.status == 200) {
-            this.logged = true
-            this.temp = '40 C'
-        } else {
-            this.error = 'Chyba'
+        if (response.status != 200) {
+            this.error = `Chyba: ${await response.text()}`
+            return
         }
+
+        const data = await response.json()
+        const jwt = jwtDecode(data.token)
+        this.token = jwt.nameid
+        const teamSecret = this.token.substring(0, 4)
+
+        // get temp
+        const responseWeather = await fetch('https://weather.rangerhub.org/api/weatherForecast')
+        if (responseWeather.status != 200) {
+            this.error = `Chyba: ${await responseWeather.text()}`
+            return
+        }
+        const dataWeather = await responseWeather.json()
+        this.temp = dataWeather[0].temperatureC
+
+        // get user count
+        const responseUsers = await fetch(`https://users-${teamSecret}.rangerhub.org/api/statistic/getUserCount`)
+        if (responseUsers.status != 200) {
+            this.error = `Chyba: ${await responseUsers.text()}`
+            return
+        }
+        const dataUsers = await responseUsers.json()
+        this.userCount = dataUsers.count
     }
   }
 }
