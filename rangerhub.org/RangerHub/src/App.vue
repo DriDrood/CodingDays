@@ -33,7 +33,10 @@ export default {
     async send(ev) {
         ev.preventDefault()
         
-        const response = await fetch('http://weather.rangerhub.org/api/team/loginTeam', { method: 'POST', headers: { 'Content-type': 'application/json' }, body: JSON.stringify({ name: this.name, password: this.password }) })
+        const response = await fetch('https://weather.rangerhub.org/api/team/loginTeam', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({ name: this.name, password: this.password }) })
 
         if (response.status == 200) {
             this.logged = true
