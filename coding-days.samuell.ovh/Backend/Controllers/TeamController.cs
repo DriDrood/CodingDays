@@ -69,7 +69,7 @@ public class TeamController : ControllerBase
         Dictionary<Guid, GetRespTeam> response = new Dictionary<Guid, GetRespTeam>();
         foreach (Team team in teams)
         {
-            string filePath = System.IO.Path.Combine(".", "Data", $"Team-{team.UserName}", $"{team.UserName}.txt");
+            string filePath = System.IO.Path.Combine(".", "Data", $"team-{team.UserName}", $"{team.UserName}.txt");
             bool finished = System.IO.File.Exists(filePath);
             string[] members = new string[0];
 
