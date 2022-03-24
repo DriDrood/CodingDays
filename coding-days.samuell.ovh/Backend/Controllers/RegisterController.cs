@@ -33,12 +33,5 @@ namespace CodingDays.Controllers
 
             return new CountResp(registrationCount);
         }
-
-        [HttpGet]
-        public ActionResult ListNoobs()
-        {
-            Registration[] registrations = _db.Registrations.ToArray();
-            return Ok(registrations);
-        }
     }
 }
