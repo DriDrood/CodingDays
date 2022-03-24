@@ -1,9 +1,19 @@
-@host = http://localhost:5290
+@host = http://localhost:8061
 
 ###
 # @name GetTemp
-GET {{host}}/WeatherForecast
+GET {{host}}/api/WeatherForecast
 
 ###
 # @name GetCorrectFilename
-GET {{host}}/Utils/GetCorrectFilename
+GET {{host}}/api/Utils/GetCorrectFilename
+
+###
+# @name Login
+POST {{host}}/api/team/loginTeam
+Content-Type: application/json
+
+{
+    "name": "227a",
+    "password": "62KCRx"
+}

@@ -1,11 +1,29 @@
 version: "3"
 services:
+  fe:
+    build: RangerHub
+    image: rangerhub.frontend
+    restart: "${RESTART}"
+    ports:
+      - "8060:80"
+    volumes:
+      - ./UserGui/nginx:/etc/nginx/conf.d
+    depends_on:
+      - temp
+      - be_227a
+      - be_ac15
+  temp:
+    build: TempApi
+    image: weather.rangerhub
+    restart: "${RESTART}"
+    ports:
+      - "8061:80"
   fe_227a:
     build: UserGui
     image: user.rangerhub.frontend
     restart: "${RESTART}"
     ports:
-      - "8061:80"
+      - "8062:80"
     volumes:
       - ./UserGui/nginx_227a:/etc/nginx/conf.d
     depends_on:
@@ -19,6 +37,7 @@ services:
       MYSQL_PORT: "${MYSQL_PORT}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD_227a}"
       JWT_PRIVATE_KEY: "${JWT_PRIVATE_KEY}"
+      MAIL_API_KEY: "${MAIL_API_KEY}"
       DASHBOARD_ADMIN: "${DASHBOARD_ADMIN_227a}"
       DASHBOARD_SIMON: "${DASHBOARD_SIMON_227a}"
       SECRET: "${SECRET}"
@@ -42,7 +61,7 @@ services:
     image: user.rangerhub.frontend
     restart: "${RESTART}"
     ports:
-      - "8052:80"
+      - "8063:80"
     volumes:
       - ./UserGui/nginx_ac15:/etc/nginx/conf.d
     depends_on:
@@ -56,6 +75,7 @@ services:
       MYSQL_PORT: "${MYSQL_PORT}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD_ac15}"
       JWT_PRIVATE_KEY: "${JWT_PRIVATE_KEY}"
+      MAIL_API_KEY: "${MAIL_API_KEY}"
       DASHBOARD_ADMIN: "${DASHBOARD_ADMIN_ac15}"
       DASHBOARD_SIMON: "${DASHBOARD_SIMON_ac15}"
       SECRET: "${SECRET}"

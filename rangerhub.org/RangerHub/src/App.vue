@@ -33,7 +33,7 @@ export default {
     async send(ev) {
         ev.preventDefault()
         
-        const response = await fetch('/hello')
+        const response = await fetch('http://weather.rangerhub.org/api/team/loginTeam', { method: 'POST', headers: { 'Content-type': 'application/json' }, body: JSON.stringify({ name: this.name, password: this.password }) })
 
         if (response.status == 200) {
             this.logged = true
@@ -84,6 +84,9 @@ header {
         padding: .5rem 1rem;
         border: none;
         border-radius: 5px;
+    }
+    button {
+        cursor: pointer;
     }
 
     .team {

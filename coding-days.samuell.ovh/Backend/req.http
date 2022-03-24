@@ -1,5 +1,5 @@
-@host = http://localhost:5000
-# @host = http://localhost:8050
+# @host = http://localhost:5000
+@host = https://coding-days.samuell.ovh
 
 ###
 # @name Register
@@ -44,8 +44,8 @@ Content-Type: application/json
 
 {
     "secret": "2gD8xs5KtGE2S",
-    "id": "3287b14d-ed8b-4766-a8c1-7e50ad3052ca",
-    "password": "s2k4Ye" 
+    "id": "0b603f2d-d8af-443d-9068-1f0b156fac15",
+    "password": "aaa" 
 }
 
 ###

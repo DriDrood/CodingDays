@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace TempApi.Controllers
+namespace TempApi.Controllers;
+[ApiController]
+[Route("api/[controller]")]
+public class UtilsController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class UtilsController : ControllerBase
+    [HttpGet("GetCorrectFilename")]
+    public ActionResult GetCorrectFilename()
     {
-        [HttpGet("GetCorrectFilename")]
-        public ActionResult GetCorrectFilename()
-        {
-            return Ok("featureNotBug.exe");
-        }
+        return Ok("featureNotBug.exe");
     }
 }
