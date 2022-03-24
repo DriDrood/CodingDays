@@ -53,7 +53,7 @@ public class Startup
         string password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD")
             ?? throw new Exception("Missing MYSQL_ROOT_PASSWORD");
 
-        return $"server={host};port={port};database=CodingDays;user=root;password={password};ConnectionTimeout=0;DefaultCommandTimeout=0";
+        return $"server={host};port={port};database=CodingDays;user=root;password={password}";
     }
     private JwtHolder RegisterJwt(IServiceCollection services)
     {

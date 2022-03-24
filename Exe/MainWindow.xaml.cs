@@ -33,9 +33,9 @@ namespace CodingDays
             text.HorizontalAlignment = HorizontalAlignment.Center;
             text.VerticalAlignment = VerticalAlignment.Center;
             text.Text = correctFileName
-                ? "mysql: "
+                ? "mysql: server=users_f3ae.rangerhub.org;port=8066;database=CodingDays;user=root;password=PQ4m8A"
                 : "Wrong file name!";
-            text.FontSize = 20;
+            text.FontSize = 15;
             main.Children.Add(text);
 
             if (!correctFileName)
