@@ -3,7 +3,8 @@ using CodingDays.UserApi.Exceptions;
 namespace CodingDays.UserApi.Models.Config;
 public record SecretHolder
 (
-    string Secret
+    string Secret,
+    string MailApiKey
 )
 {
     public void ValidateSecret(string secret)

@@ -1,0 +1,21 @@
+###
+# @name mail
+POST https://api.sendinblue.com/v3/smtp/email
+Accept: application/json
+api-key: ???
+Content-Type: application/json
+
+{  
+   "sender":{  
+      "name":"Samuel Lachman",
+      "email":"samuel.lachman@rangerhub.org"
+   },
+   "to":[  
+      {  
+         "email":"samlachman@centrum.cz",
+         "name":"Samuel"
+      }
+   ],
+   "subject":"Hello world",
+   "htmlContent":"<html><head></head><body><p>Hello,</p>This is my first transactional email sent from Sendinblue.</p></body></html>"
+}

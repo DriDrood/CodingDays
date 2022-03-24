@@ -72,8 +72,10 @@ public static class Startup
     {
         string secret = Environment.GetEnvironmentVariable("SECRET")
             ?? throw new Exception("Missing secret");
+        string mailApiKey = Environment.GetEnvironmentVariable("MAIL_API_KEY")
+            ?? throw new Exception("Missing mail api key");
 
-        SecretHolder secretHolder = new SecretHolder(secret);
+        SecretHolder secretHolder = new SecretHolder(secret, mailApiKey);
         services.AddSingleton<SecretHolder>(sp => secretHolder);
 
         return services;

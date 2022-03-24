@@ -3,5 +3,6 @@ public record RegisterReq
 (
     string Secret,
     string Name,
+    string Email,
     string Password
 );

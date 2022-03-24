@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CodingDays.UserApi.Database;
 using CodingDays.UserApi.Database.Entities;
@@ -15,6 +19,8 @@ namespace CodingDays.UserApi.Controllers;
 [Route("api/[controller]")]
 public class SessionController : ControllerBase
 {
+    private static Dictionary<Guid, string> _userTokens = new Dictionary<Guid, string>();
+    
     public SessionController(DB db, JwtHandler jwtHandler, SecretHolder secretHolder)
     {
         _db = db;
@@ -58,6 +64,7 @@ public class SessionController : ControllerBase
         {
             Id = Guid.NewGuid(),
             UserName = param.Name,
+            Email = param.Email,
         };
         user.PasswordHash = _passwordHasher.HashPassword(user, param.Password);
 
@@ -65,5 +72,67 @@ public class SessionController : ControllerBase
         await _db.SaveChangesAsync();
 
         return new RegisterResp(user.Id);
+    }
+
+    [HttpPost("[action]")]
+    public async Task ForgotPassword(ForgotPasswordReq param)
+    {
+        User user = await _db.Users.FirstOrDefaultAsync(u => u.UserName == param.Name)
+            ?? throw new UsageException("Uživatel nenalezen");
+        
+        // generate token
+        Random random = new Random();
+        byte[] buffer = new byte[24];
+        random.NextBytes(buffer);
+        string token = Convert.ToBase64String(buffer);
+        _userTokens[user.Id] = token;
+
+        // send mail
+        HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, "https://api.sendinblue.com/v3/smtp/email");
+        message.Headers.Add("Accept", "application/json");
+        message.Headers.Add("api-key", _secretHolder.MailApiKey);
+        object content = new
+        {
+            sender = new
+            {
+                name = "Users - RangerHub.org",
+                email = "users@rangerhub.org",
+            },
+            to = new object[]
+            {
+                new
+                {
+                    name = user.UserName,
+                    email = user.Email,
+                }
+            },
+            subject = "Reset password",
+            htmlContent = $"<html><head></head><body><p>Hello,</p><p>Use this link to reset your password: <a href='http://users.rangerhub.org/resetPassword?token={token}'>Reset password</a></p></body></html>"
+        };
+        message.Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
+        
+        using (HttpClient client = new HttpClient())
+        {
+            HttpResponseMessage result = await client.SendAsync(message);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                string reason = await result.Content.ReadAsStringAsync();
+                throw new UsageException(reason);
+            }
+        }
+    }
+
+    [HttpPost("[action]")]
+    public async Task ResetPassword(ResetPasswordReq param)
+    {
+        User user = await _db.Users.FirstOrDefaultAsync(u => u.UserName == param.Name)
+            ?? throw new UsageException("Uživatel nenalezen");
+
+        if (!_userTokens.TryGetValue(user.Id, out string? token) || token != param.Token)
+            throw new UsageException("Neplatný token");
+
+        user.PasswordHash = _passwordHasher.HashPassword(user, param.NewPassword);
+        await _db.SaveChangesAsync();
     }
 }

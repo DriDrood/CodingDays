@@ -12,7 +12,28 @@ Content-Type: application/json
 {
     "secret": "2gD8xs5KtGE2S",
     "name": "admin",
+    "email": "admin@rangerhub.org",
     "password": "mCHb8nWn95"
+}
+
+###
+# @name ForgotPassword
+POST {{host}}/api/session/forgotPassword
+Content-Type: application/json
+
+{
+    "name": "admin"
+}
+
+###
+# @name ResetPassword
+POST {{host}}/api/session/resetPassword
+Content-Type: application/json
+
+{
+    "name": "admin",
+    "token": "67Yf4FG2ZO9ujpeiEpdNkAHMStxw0qo9",
+    "newPassword": "ahoj"
 }
 
 ###
