@@ -4,7 +4,8 @@ namespace CodingDays.UserApi.Models.Config;
 public record SecretHolder
 (
     string Secret,
-    string MailApiKey
+    string MailApiKey,
+    string ServerUrl
 )
 {
     public void ValidateSecret(string secret)

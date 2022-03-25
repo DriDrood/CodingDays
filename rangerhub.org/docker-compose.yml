@@ -38,8 +38,9 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD_227a}"
       JWT_PRIVATE_KEY: "${JWT_PRIVATE_KEY}"
       MAIL_API_KEY: "${MAIL_API_KEY}"
-      DASHBOARD_ADMINISTRÁTOR: "${DASHBOARD_ADMIN_227a}"
-      DASHBOARD_SIMON: "${DASHBOARD_SIMON_227a}"
+      SERVER_URL: "https://users-f3ae.rangerhub.org"
+      DASHBOARD_ADMINISTRÁTOR: "https://rangerhub.org/files/f3ae.zip"
+      DASHBOARD_SIMON: "github.com - team-227a - Gdh6JAy8g4"
       SECRET: "${SECRET}"
       ASPNETCORE_ENVIRONMENT: Production
     depends_on:
@@ -76,8 +77,9 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD_ac15}"
       JWT_PRIVATE_KEY: "${JWT_PRIVATE_KEY}"
       MAIL_API_KEY: "${MAIL_API_KEY}"
-      DASHBOARD_ADMINISTRÁTOR: "${DASHBOARD_ADMIN_ac15}"
-      DASHBOARD_SIMON: "${DASHBOARD_SIMON_ac15}"
+      SERVER_URL: "https://users-0b60.rangerhub.org"
+      DASHBOARD_ADMINISTRÁTOR: "https://rangerhub.org/files/0b60.zip"
+      DASHBOARD_SIMON: "github.com - team-ac15 - 9MRnzMKPd5"
       SECRET: "${SECRET}"
       ASPNETCORE_ENVIRONMENT: Production
     depends_on:

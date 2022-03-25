@@ -73,11 +73,13 @@ public static class Startup
     private static IServiceCollection AddSecret(this IServiceCollection services)
     {
         string secret = Environment.GetEnvironmentVariable("SECRET")
-            ?? throw new Exception("Missing secret");
+            ?? throw new Exception("Missing secret ENV");
         string mailApiKey = Environment.GetEnvironmentVariable("MAIL_API_KEY")
-            ?? throw new Exception("Missing mail api key");
+            ?? throw new Exception("Missing mail api key ENV");
+        string serverUrl = Environment.GetEnvironmentVariable("SERVER_URL")
+            ?? throw new Exception("Missing server url ENV");
 
-        SecretHolder secretHolder = new SecretHolder(secret, mailApiKey);
+        SecretHolder secretHolder = new SecretHolder(secret, mailApiKey, serverUrl);
         services.AddSingleton<SecretHolder>(sp => secretHolder);
 
         return services;

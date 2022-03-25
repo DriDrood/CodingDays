@@ -107,7 +107,7 @@ public class SessionController : ControllerBase
                 }
             },
             subject = "Reset password",
-            htmlContent = $"<html><head></head><body><p>Hello,</p><p>Use this link to reset your password: <a href='http://users.rangerhub.org/resetPassword?token={token}'>Reset password</a></p></body></html>"
+            htmlContent = $"<html><head></head><body><p>Hello,</p><p>Use this link to reset your password: <a href='{_secretHolder.ServerUrl}/resetPassword?token={token}'>Reset password</a></p></body></html>"
         };
         message.Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
         
