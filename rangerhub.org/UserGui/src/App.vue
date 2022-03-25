@@ -1,10 +1,13 @@
 <template>
+    <Notifications />
     <ResetPassword v-if="isReset" />
     <Login v-else-if="!isLogged" />
     <Dashboard v-else />
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Notifications from './components/notifications.vue'
 import ResetPassword from './components/resetPassword.vue'
 import Login from './components/login.vue'
 import Dashboard from './components/dashboard.vue'
@@ -12,11 +15,13 @@ import Dashboard from './components/dashboard.vue'
 export default {
     name: 'app',
     components: {
+        Notifications,
         ResetPassword,
         Login,
         Dashboard,
     },
     computed: {
+        ...mapState(['notifications']),
         isReset() {
             return this.$store.state.resetPasswordToken != null
         },
