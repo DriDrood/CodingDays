@@ -1,0 +1,5 @@
+Prvních 6 prvoèísel je: 2, 3, 5, 7, 11 a 13. 11 je tedy páté prvoèíslo, 13 je 6. prvoèíslo.
+
+Jaké prvoèíslo je na 990050. místì?
+
+Kód: Kódem je øešení této úlohy.
