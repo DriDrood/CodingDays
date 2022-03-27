@@ -47,8 +47,9 @@ public class HintController : ControllerBase
 
         // try get hint
         hint = _db.Hints
+            .Include(h => h.CypherUsages)
             .OrderBy(h => h.Order)
-            .FirstOrDefault(h => h.Step == team.CurrentStep && !h.CypherUsages.Any());
+            .FirstOrDefault(h => h.Step == team.CurrentStep && !h.CypherUsages.Any(cu => cu.TeamId == _teamHolder.TeamId));
 
         // all hints are used
         if (hint is null)
